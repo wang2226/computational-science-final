@@ -33,7 +33,6 @@ A .= A / (Δz^2)
 b = -ones(N-1, 1)
 
 
-
 #   Perform LU solve
 println("Direct solve on CPU")
 Udummy = A \ b
