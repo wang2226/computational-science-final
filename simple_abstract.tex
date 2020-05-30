@@ -1,0 +1,75 @@
+\documentclass[11pt]{article}
+
+\usepackage{mathtools}
+\newcommand{\pd}[2]{\frac{\partial #1}{\partial #2}}
+
+\title{Further Simplified Abstract\\And First Steps}
+\author{Pierce Hunter, Nick Kuckuck, Haoran Wang}
+\date{22 May 2020}
+
+\begin{document}
+	
+	\maketitle
+	
+	\section{Most Simple Version}
+	Solve the 1D Poisson's equation to steady-state for a stuck-on glacier
+	\begin{equation}
+		\pd{^2u}{z^2} = -1; \qquad 0\leq z\leq 1
+	\end{equation}
+	with the boundary conditions
+	\begin{gather}
+		u\left(0\right) = 0;\\
+		\pd{u}{z}(1) = 0.
+	\end{gather}
+	We can discretize the domain in space ($ z $) using the standard second-order centered difference approximation
+	\begin{equation}
+		\pd{^2u_j}{z^2} = \frac{u_{j-1}-2u_j+u_{j+1}}{\left(z_{j+1}-z_j\right)\left(z_j-z_{j-1}\right)} = -1
+	\end{equation}
+	which, using a consistent distance between nodes, becomes
+	\begin{equation}
+		\frac{u_{j-1}-2u_j+u_{j+1}}{\Delta z^2} = -1 ~~\text{for}~~ 1\leq j\leq N,
+	\end{equation}
+	with the boundary conditions
+	\begin{gather}
+		u_1 = 0;\\
+		\pd{u_N}{z} = 0.
+	\end{gather}
+	For the first equation, when $ j = 2 $, we have
+	\begin{equation}
+		\frac{u_1 -2u_2 + u_3}{\Delta z^2} = -1 \implies \frac{-2u_2 + u_3}{\Delta z^2} = -1;
+	\end{equation}
+	and for the final equation when $ j = N $ we have
+	\begin{equation}
+		\frac{u_{N-1} - 2u_N + u_{N+1}}{\Delta z^2} = -1 ~~\text{with}~~ u_N = u_{N+1} \implies \frac{u_{N-1} - u_N}{\Delta z^2} = -1.
+	\end{equation}
+	So the system of equations is
+	\begin{equation}
+		\begin{dcases}
+		\frac{-2u_2 + u_3}{\Delta z^2} = -1\\
+		\frac{u_{j-1}-2u_j+u_{j+1}}{\Delta z^2} = -1;& 3\leq j\leq N-1\\
+		\frac{u_{N-1} - u_N}{\Delta z^2} = -1.
+		\end{dcases}
+	\end{equation}
+	We can represent this system of equations as a matrix ($ A $) of the form
+	\begin{equation}
+		A = \frac{1}{\Delta z^2}\begin{bmatrix}
+		-2&1&0&\cdots&0\\
+		1&-2&1&\cdots&0\\
+		\vdots&\ddots&\ddots&\ddots&\vdots\\
+		0&\cdots&1&-2&1\\
+		0&\cdots&0&1&-1
+		\end{bmatrix}
+	\end{equation}
+	with the $ u $-column vector and $ b $-solution vector as
+	\begin{equation}
+		u = \begin{bmatrix}
+		u_2\\
+		\vdots\\
+		u_N
+		\end{bmatrix} \qquad b = \begin{bmatrix}
+		-1\\\vdots\\-1
+		\end{bmatrix}
+	\end{equation}
+	such that $ Au = b $.
+	
+\end{document}
