@@ -2,73 +2,83 @@ using LinearAlgebra
 using SparseArrays
 using IterativeSolvers
 using Printf
+# using CUDA
+using CuArrays
+CuArrays.allowscalar(false)
+using CUDAnative
+using CUDAdrv: synchronize
 
-N = 10
-Δt = 0.1
-
-#=
-    create sparse matrix A
-=#
-Il = 2:N
-Jl = 1:N-1
-Iu = 1:N-1
-Ju = 2:N
-
-dl = -ones(N-1)
-du = -ones(N-1)
-d = 2*ones(N)
-A = sparse(Il,Jl,dl,N,N) + sparse(Iu,Ju,du,N,N) + sparse(1:N,1:N,d,N,N)
-# @show Matrix(A)
-
-b = -ones(N, 1)
-# @show Matrix(b)
+Δz = 0.0001
+z = 0:Δz:1
+N = length(z)
 
 
-function comp_piv_matrices(p,q,r)
-
-    N = length(p)
-
-    Id = sparse(1:N,1:N,ones(N),N,N)
-    P = copy(Id)
-    Q = copy(Id)
-
-    for i = 1:N
-        P[i,:] = Id[p[i],:]
-        Q[:,i] = Id[:,q[i]]
-    end
-
-    R = sparse(1:N,1:N,r,N,N)
-
-    return (P,Q,R)
-
+function exact(z)
+    return -1/2 * z.^2 + z
 end
 
-#=
-    Perform LU solve
-=#
-println("Perform Julia Native LU Factorization - Sparse")
-F = lu(A)     # Call function once before timing
-@time F = lu(A)
-(P,Q,R) = comp_piv_matrices(F.p,F.q,F.Rs)
-@assert F.L*F.U ≈ P*R*A*Q
-@printf "norm(PRAQ-LU) = \x1b[31m %e \x1b[0m\n" norm(F.L*F.U-P*R*A*Q)
+# create sparse matrix A
+Il = 2:N-1
+Jl = 1:N-2
+Iu = 1:N-2
+Ju = 2:N-1
+
+dl = ones(N-2)
+du = ones(N-2)
+d = -2*ones(N-1)
+A = sparse(Il,Jl,dl,N-1,N-1) + sparse(Iu,Ju,du,N-1,N-1) + sparse(1:N-1,1:N-1,d,N-1,N-1)
+A[N-1, N-1] = -1
+A .= A / (Δz^2)
+
+b = -ones(N-1, 1)
+
+
+
+#   Perform LU solve
+println("Direct solve on CPU")
+Udummy = A \ b
+@time Umod = A \ b
+umod = [0;Umod]
+# @show umod
+@printf "norm between our solution and the exact solution = \x1b[31m %e \x1b[0m\n" sqrt(Δz) * norm(umod - exact(z))
 println("-----------")
 println()
 
-println("Perform Julia Native LU Solve - Sparse")
-@time u = Q*(F.U\(F.L\(P*R*b)))
-umod = A\b                      # Use Julia built in
-@assert u ≈ umod
-@printf "norm(u-umod) = \x1b[31m %e \x1b[0m\n" norm(u-umod)
+#    Perform CG solve
+println("Native Julia CG solve on CPU")
+u_dummy = cg(A, b)
+@time u_1 = cg(A, b)
+u = [0;u_1]
+@printf "norm between our solution and the exact solution = \x1b[31m %e \x1b[0m\n" sqrt(Δz) * norm(u - exact(z))
+
 println("-----------")
 println()
 
 
-#=
-    Perform CG solve
-=#
-println("Perform Native Julia CG solve")
-u = cg(A, b)            #call once
-@time x = cg(A, b)
+d_A = CuArray(A)
+d_b = CuArray(b)
+
+println("Direct solve on GPU")
+dummy = d_A \ d_b
+@time u_old = d_A \ d_b
+regular_u = Array(u_old)
+u = [0;regular_u]
+@printf "norm between our solution and the exact solution = \x1b[31m %e \x1b[0m\n" sqrt(Δz) * norm(u - exact(z))
+println("-----------")
+println()
+
+# CG solve on GPU
+d_A = CuArray(A)
+d_b = CuArray(b)
+u_cg = CuArray(zeros(size(d_b)))
+u_dummy = CuArray(zeros(size(d_b)))
+
+println("CG solve on GPU")
+cg!(u_dummy, d_A, d_b)
+@time cg!(u_cg, d_A, d_b)
+
+regular = Array(u_cg)
+u = [0;regular]
+@printf "norm between our solution and the exact solution = \x1b[31m %e \x1b[0m\n" sqrt(Δz) * norm(u - exact(z))
 println("-----------")
 println()

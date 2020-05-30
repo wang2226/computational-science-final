@@ -6,8 +6,9 @@ using CuArrays
 using CUDAnative
 using CUDAdrv: synchronize
 
-N = 100
-Δt = 0.1
+Δz = 0.0001
+z = 0:Δz:1
+N = length(z)
 
 """
     gpugesv!(A,b)
