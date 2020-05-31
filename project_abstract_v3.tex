@@ -1,0 +1,184 @@
+\documentclass[10pt]{article}
+
+\usepackage{mathtools}
+\usepackage{geometry}
+\usepackage{siunitx}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{patterns}
+\geometry{margin=2in,top=1in,bottom=1in}
+
+\newcommand{\pd}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\abs}[1]{\left|#1\right|}
+
+\title{Project Abstract\\Version 3}
+\author{Pierce Hunter, Nick Kuckuck, Haoran Wang}
+\date{5/29/2020}
+
+\begin{document}
+	\maketitle
+	
+	\section{1D Approach}
+	We solved the 1D equation
+	\begin{equation}
+		\pd{^2u}{z^2} = -1; \quad 0\leq z\leq 1
+	\end{equation}
+	with boundary conditions
+	\begin{equation}
+		\pd{u}{z}\left(1\right) = 0; \quad u(0) = 0
+	\end{equation}
+	in the four following ways:
+	\begin{itemize}
+		\item Direct solve on the CPU
+		\item CG on the CPU
+		\item Direct solve on the GPU
+		\item CG on the GPU.
+	\end{itemize}
+	\section{2D Approach}
+	We now seek to expand the problem into 2D and solve using the same techniques. The 2D version of the problem is
+	\begin{equation}
+		\pd{^2u}{y^2} + \pd{^2u}{z^2} = -1; \quad \begin{dcases}
+		0\leq y\leq 1\\
+		0\leq z\leq 1
+		\end{dcases}
+	\end{equation}
+	and we expand upon the boundary conditions which become
+	\begin{align}
+		\pd{u}{y} = 0&\text{ at }y=1\\
+		\pd{u}{z} = 0&\text{ at }z=1\\
+		u = 0&\text{ at }y=0\vphantom{\pd{u}{y}}\\
+		u = 0&\text{ at }z=0\vphantom{\pd{u}{y}}.
+	\end{align}
+	\subsection{Discretization}
+	We discretize in space in both $ y $ and $ z $ using centered difference as
+	\begin{equation}
+		\frac{u_{i-1,j} - 2u_{i,j} + u_{i+1,j}}{{\Delta y}^2} + \frac{u_{i,j-1} - 2u_{i,j} + u_{i,j+1}}{{\Delta z}^2} = -1
+	\end{equation}
+	which simplifies when $ \Delta y = \Delta z $ to
+	\begin{equation}
+		u_{i-1,j} + u_{i,j-1} - 4u_{i,j} + u_{i+1,j} + u_{i,j+1} = -{\Delta y}^2.
+	\end{equation}
+	This discretization works when $ 2\leq i\leq N $ and $ 2\leq j\leq N $, but we need to solve on the boundaries
+	\begin{itemize}
+		\item $ i = 2 $
+		\begin{itemize}
+			\item AND $ j = 2 $
+			\begin{align*}
+				u_{1,2} + u_{2,1} - 4u_{2,2} + u_{3,2} + u_{2,3} &= -{\Delta y}^2\\
+				- 4u_{2,2} + u_{3,2} + u_{2,3} &= -{\Delta y}^2
+			\end{align*}
+			\item AND $ j = N $
+			\begin{align*}
+				u_{1,N} + u_{2,N-1} - 4u_{2,N} + u_{3,N} + u_{2,N+1} &= -{\Delta y}^2\\
+				u_{2,N-1} - 3u_{2,N} + u_{3,N} &= -{\Delta y}^2
+			\end{align*}
+			\item OTHERWISE
+			\begin{align*}
+				u_{1,j} + u_{2,j-1} - 4u_{2,j} + u_{3,j} + u_{2,j+1} &= -{\Delta y}^2\\
+				u_{2,j-1} - 4u_{2,j} + u_{3,j} + u_{2,j+1} &= -{\Delta y}^2
+			\end{align*}
+		\end{itemize}
+		\item $ i = N $
+		\begin{itemize}
+			\item AND $ j = 2 $
+			\begin{align*}
+				u_{N-1,2} + u_{2,1} - 4u_{N,2} + u_{N+1,2} + u_{N,3} &= -{\Delta y}^2\\
+				u_{N-1,2} - 3u_{N,2} + u_{N,3} &= -{\Delta y}^2
+			\end{align*}
+			\item AND $ j = N $
+			\begin{align*}
+				u_{N-1,N} + u_{N,N-1} - 4u_{N,N} + u_{N+1,N} + u_{N,N+1} &= -{\Delta y}^2\\
+				u_{N-1,N} + u_{N,N-1} - 2u_{N,N} &= -{\Delta y}^2
+			\end{align*}
+			\item OTHERWISE
+			\begin{align*}
+				u_{N-1,j} + u_{N,j-1} - 4u_{N,j} + u_{N+1,j} + u_{N,j+1} &= -{\Delta y}^2\\
+				u_{N-1,j} + u_{N,j-1} - 3u_{N,j} + u_{N,j+1} &= -{\Delta y}^2
+			\end{align*}
+		\end{itemize}
+		\item $ j = 2 $ AND $ 3\leq i\leq N-1 $
+		\begin{align*}
+			u_{i-1,2} + u_{i,1} - 4u_{i,2} + u_{i+1,2} + u_{i,3} &= -{\Delta y}^2\\
+			u_{i-1,2} - 4u_{i,2} + u_{i+1,2} + u_{i,3} &= -{\Delta y}^2
+		\end{align*}
+		\item $ j = N $ AND $ 3\leq i\leq N-1 $
+		\begin{align*}
+			u_{i-1,N} + u_{i,N-1} - 4u_{i,N} + u_{i+1,N} + u_{i,N+1} &= -{\Delta y}^2\\
+			u_{i-1,N} + u_{i,N-1} - 3u_{i,N} + u_{i+1,N} &= -{\Delta y}^2
+		\end{align*}
+	\end{itemize}
+	\section{Convert to a Matrix}
+	In order to convert this discretization to a matrix that can be used for a direct solve we need to define a new indexing convention. For this we calculate a global index $ k $ as
+	\begin{equation}
+		k = (i-2)(N-1) + (j-1).
+	\end{equation}
+	We can then translate our discretization into this new system, starting with the corner (2,2):
+	\begin{itemize}
+		\item $ (2,2) $
+		\begin{align*}
+			- 4u_1 + u_{N} + u_2 &= -{\Delta y}^2
+		\end{align*}
+		\item $ (2,j) $ with $ 3\leq j\leq N-1 $
+		\begin{align*}
+			u_{j-2} - 4u_{j-1} + u_{N-2+j} + u_j &= -{\Delta y}^2
+		\end{align*}
+		\item $ (2,N) $
+		\begin{align*}
+			u_{N-2} - 3u_{N-1} + u_{2N-2} &= -{\Delta y}^2
+		\end{align*}
+		\item $ (i,2) $ with $ 3\leq i\leq N-1 $
+		\begin{align*}
+			\begin{split}
+				u_{(i-3)(N-1)+1} - 4u_{(i-2)(N-1)+1} \\+ u_{(i-1)(N-1)+1} + u_{(i-2)(N-1)+2} &= -{\Delta y}^2
+			\end{split}
+		\end{align*}
+		\item $ (i,j) $ with $ 3\leq i\leq N-1 $ and $ 3\leq j\leq N-1 $
+		\begin{align*}
+			\begin{split}
+				u_{(i-3)(N-1)+j-1} + u_{(i-2)(N-1)+j-2} - 4u_{(i-2)(N-1)+j-1}\\ + u_{(i-1)(N-1)+j-1} + u_{(i-2)(N-1)+j}& = -{\Delta y}^2
+			\end{split}
+		\end{align*}
+		\item $ (i,N) $ with $ 3\leq i\leq N-1 $
+		\begin{align*}
+			\begin{split}
+				u_{(i-3)(N-1)+N-1} + u_{(i-2)(N-1)+N-2} - 3u_{(i-2)(N-1)+N-1} \\+ u_{(i-1)(N-1)+N-1} &= -{\Delta y}^2
+			\end{split}
+		\end{align*}
+		\item $ (N,2) $
+		\begin{align*}
+			u_{(N-3)(N-1)+1} - 3u_{(N-2)(N-1)+1} + u_{(N-2)(N-1)+2} &= -{\Delta y}^2
+		\end{align*}
+		\item $ (N,j) $ with $ 3\leq j\leq N-1 $
+		\begin{align*}
+			\begin{split}
+				u_{(N-3)(N-1)+j-1} + u_{(N-2)(N-1)+j-2} - 3u_{(N-2)(N-1)+j-1}\\ + u_{(N-2)(N-1)+j} &= -{\Delta y}^2
+			\end{split}
+		\end{align*}
+		\item $ (N,N) $
+		\begin{align*}
+			u_{(N-2)(N-1)} + u_{(N-2)N} - 2u_{(N-1)^2} &= -{\Delta y}^2
+		\end{align*}
+	\end{itemize}
+	So what we end up with is an $ (N-1)^2\times(N-1)^2 $ matrix $ A $ and a solution vector $ b $ with $ (N-1)^2 $ entries. Moving across a row we start at $ (2,2) $, to increase $ j $ by one we move to the right 1 entry, to increase $ i $ by 1 we move the right $ (N-1) $ entries, such that we hit every value of $ j $ first, then move to the next $ i $.
+	\newline\indent Along the diagonals of the matrix $ A $ we have $ -4 $ except in the following locations:
+	\begin{itemize}
+		\item rows $ \alpha(N-1) $ the diagonal entry is $ -3 $ for $ 1\leq \alpha\leq N-2 $
+		\item rows $ \left(N-2\right)\left(N-1\right)+\beta $ the diagonal is $ -3 $ for $ 1\leq\beta\leq N-2 $
+		\item row $ \left(N-1\right)^2 $ the diagonal is $ -2 $
+	\end{itemize}
+	We also have 4 other sub-diagonals that will all contain ones. These represent the following location:
+	\begin{itemize}
+		\item $ j-1 $ which is directly below the diagonal\\
+		In Julia these are the locations: \texttt{[2:(N-1)$^2$, 1:(N-1)$^2$-1]}
+		\item $ j+1 $ which is directly above the diagonal\\
+		In Julia these are the locations: \texttt{[1:(N-1)$^2$-1, 2:(N-1)$^2$]}
+		\item $ i-1 $ which are exactly $ N-1 $ below the diagonal\\
+		In Julia these are the locations: \texttt{[N:(N-1)$^2$, 1:(N-1)$^2$-(N-1)]}
+		\item $ i+1 $ which are exactly $ N+1 $ above the diagonal\\
+		In Julia these are the locations: \texttt{[1:(N-1)$^2$-(N-1), N:(N-1)$^2$]}
+	\end{itemize}
+	Once $ A $ is created it is probably easier to create a column vector of length $ (N-1)^2 $ in which every location contains $ -{\Delta y}^2 $. Once a solution is found via $ u = A\backslash b $ or CG, then $ u $ can be reshaped to the correct dimensions either manually\textemdash \texttt{i = floor((k-1)/(N-1)) + 2}; \texttt{j = mod(k-1,N-1) + 2}\textemdash or via the reshape function transposed\textemdash \texttt{U = reshape(u,N-1,N-1)$'$}. Using reshape without the transpose puts the solution in meshgrid format (with $ y $ as the columns and $ z $ as the rows) similar to looking at a cross-section.
+	
+\end{document}
