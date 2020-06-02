@@ -168,12 +168,14 @@
 		\item rows $ \left(N-2\right)\left(N-1\right)+\beta $ the diagonal is $ -3 $ for $ 1\leq\beta\leq N-2 $
 		\item row $ \left(N-1\right)^2 $ the diagonal is $ -2 $
 	\end{itemize}
-	We also have 4 other sub-diagonals that will all contain ones. These represent the following location:
+	We also have 4 other sub-diagonals that will all contain ones except where noted. These represent the following location:
 	\begin{itemize}
 		\item $ j-1 $ which is directly below the diagonal\\
-		In Julia these are the locations: \texttt{[2:(N-1)$^2$, 1:(N-1)$^2$-1]}
+		In Julia these are the locations: \texttt{[2:(N-1)$^2$, 1:(N-1)$^2$-1]}\\
+		Exception: the locations $ (\alpha(N-1) + 1,\alpha(N-1)) $ should be zero for $ 1\leq\alpha\leq N-2 $ 
 		\item $ j+1 $ which is directly above the diagonal\\
-		In Julia these are the locations: \texttt{[1:(N-1)$^2$-1, 2:(N-1)$^2$]}
+		In Julia these are the locations: \texttt{[1:(N-1)$^2$-1, 2:(N-1)$^2$]}\\
+		Exception: the locations $ (\alpha(N-1),\alpha(N-1)+1) $ should be zero for $ 1\leq\alpha\leq N-2 $ 
 		\item $ i-1 $ which are exactly $ N-1 $ below the diagonal\\
 		In Julia these are the locations: \texttt{[N:(N-1)$^2$, 1:(N-1)$^2$-(N-1)]}
 		\item $ i+1 $ which are exactly $ N+1 $ above the diagonal\\
