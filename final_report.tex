@@ -1,3 +1,5 @@
+% !TeX program = lualatex
+
 \documentclass[11pt]{article}
 \usepackage[T1]{fontenc}
 \usepackage{beramono}
@@ -5,7 +7,8 @@
 \usepackage[usenames,dvipsnames]{xcolor}
 \usepackage[mathletters]{ucs}
 \usepackage[utf8x]{inputenc}
-
+\usepackage{multirow}
+\usepackage{multicol}
 \usepackage{mathtools}
 \usepackage{geometry}
 \usepackage{siunitx}
@@ -14,7 +17,7 @@
 \usepackage{xcolor}
 \usepackage{tikz}
 \usetikzlibrary{patterns}
-\geometry{margin=2in,top=1in,bottom=1in}
+\geometry{margin=1.5in,top=1in,bottom=1in}
 
 \newcommand{\pd}[2]{\frac{\partial #1}{\partial #2}}
 \newcommand{\abs}[1]{\left|#1\right|}
@@ -41,10 +44,11 @@
     showstringspaces = false,
 }
 
-\begin{document}
 \title{\textbf{Final Report}}
 \author{Pierce Hunter, Nick Kuckuck, Haoran Wang}
-\date{6-07-2020}
+\date{7 June 2020}
+
+\begin{document}
 \maketitle
 \section{1D Approach}
 	We solved the 1D equation
@@ -62,15 +66,48 @@
 		\item Direct solve on the GPU
 		\item CG on the GPU.
 	\end{itemize}
+	For the one-dimensional problem we can utilize the straight-forward centered-difference discretization from class, namely
+	\begin{equation}
+		\frac{u_{j-1}-2u_j+u_{j+1}}{\Delta z^2} = -1 ~~\text{for}~~ 1\leq j\leq N.
+	\end{equation}
+	We discretize on the boundaries as well, giving the final system of equations
+	\begin{equation}
+		\begin{dcases}
+		\frac{-2u_2 + u_3}{\Delta z^2} = -1\\
+		\frac{u_{j-1}-2u_j+u_{j+1}}{\Delta z^2} = -1;& 3\leq j\leq N-1\\
+		\frac{u_{N-1} - u_N}{\Delta z^2} = -1.
+		\end{dcases}
+	\end{equation}
+	We can represent this system of equations as a matrix ($ A $) of the form
+	\begin{equation}
+		A = \frac{1}{\Delta z^2}\begin{bmatrix}
+		-2&1&0&\cdots&0\\
+		1&-2&1&\cdots&0\\
+		\vdots&\ddots&\ddots&\ddots&\vdots\\
+		0&\cdots&1&-2&1\\
+		0&\cdots&0&1&-1
+		\end{bmatrix}
+	\end{equation}
+	with the $ u $-column vector and $ b $-solution vector as
+	\begin{equation}
+		u = \begin{bmatrix}
+		u_2\\
+		\vdots\\
+		u_N
+		\end{bmatrix} \qquad b = \begin{bmatrix}
+		-1\\\vdots\\-1
+		\end{bmatrix}
+	\end{equation}
+	such that $ Au = b $.
 	\section{2D Approach}
-	We now seek to expand the problem into 2D and solve using the same techniques. The 2D version of the problem is
+	We then expanded the problem to two-dimensions utilizing the same techniques. In 2D eq. (1) becomes
 	\begin{equation}
 		\pd{^2u}{y^2} + \pd{^2u}{z^2} = -1; \quad \begin{dcases}
 		0\leq y\leq 1\\
 		0\leq z\leq 1
 		\end{dcases}
 	\end{equation}
-	and we expand upon the boundary conditions which become
+	and we expand the boundary conditions in (2) as
 	\begin{align}
 		\pd{u}{y} = 0&\text{ at }y=1\\
 		\pd{u}{z} = 0&\text{ at }z=1\\
@@ -78,58 +115,58 @@
 		u = 0&\text{ at }z=0\vphantom{\pd{u}{y}}.
 	\end{align}
 	\subsection{Discretization}
-	We discretize in space in both $ y $ and $ z $ using centered difference as
+	We transform (7) into a system of ODE's by discretizing in space\textemdash both $ y $ and $ z $\textemdash using centered difference, such that
 	\begin{equation}
-		\frac{u_{i-1,j} - 2u_{i,j} + u_{i+1,j}}{{\Delta y}^2} + \frac{u_{i,j-1} - 2u_{i,j} + u_{i,j+1}}{{\Delta z}^2} = -1
+		\frac{u_{i-1,j} - 2u_{i,j} + u_{i+1,j}}{{\Delta y}^2} + \frac{u_{i,j-1} - 2u_{i,j} + u_{i,j+1}}{{\Delta z}^2} = -1.
 	\end{equation}
 	which simplifies when $ \Delta y = \Delta z $ to
 	\begin{equation}
 		u_{i-1,j} + u_{i,j-1} - 4u_{i,j} + u_{i+1,j} + u_{i,j+1} = -{\Delta y}^2.
 	\end{equation}
-	This discretization works when $ 2\leq i\leq N $ and $ 2\leq j\leq N $, but we need to solve on the boundaries
+	This discretization works when $ 2\leq i\leq N $ and $ 2\leq j\leq N $, but we need to solve on the boundaries, of which there are many. The boundary conditions discretize separately for the edges and corners, which expands our boundary conditions to eight separate cases
 	\begin{itemize}
-		\item $ i = 2 $
+		\item when $ i = 2 $
 		\begin{itemize}
-			\item AND $ j = 2 $
+			\item and $ j = 2 $
 			\begin{align*}
 				u_{1,2} + u_{2,1} - 4u_{2,2} + u_{3,2} + u_{2,3} &= -{\Delta y}^2\\
 				- 4u_{2,2} + u_{3,2} + u_{2,3} &= -{\Delta y}^2
 			\end{align*}
-			\item AND $ j = N $
+			\item and $ j = N $
 			\begin{align*}
 				u_{1,N} + u_{2,N-1} - 4u_{2,N} + u_{3,N} + u_{2,N+1} &= -{\Delta y}^2\\
 				u_{2,N-1} - 3u_{2,N} + u_{3,N} &= -{\Delta y}^2
 			\end{align*}
-			\item OTHERWISE
+			\item otherwise
 			\begin{align*}
 				u_{1,j} + u_{2,j-1} - 4u_{2,j} + u_{3,j} + u_{2,j+1} &= -{\Delta y}^2\\
-				u_{2,j-1} - 4u_{2,j} + u_{3,j} + u_{2,j+1} &= -{\Delta y}^2
+				u_{2,j-1} - 4u_{2,j} + u_{3,j} + u_{2,j+1} &= -{\Delta y}^2,
 			\end{align*}
 		\end{itemize}
-		\item $ i = N $
+		\item when $ i = N $
 		\begin{itemize}
-			\item AND $ j = 2 $
+			\item and $ j = 2 $
 			\begin{align*}
 				u_{N-1,2} + u_{2,1} - 4u_{N,2} + u_{N+1,2} + u_{N,3} &= -{\Delta y}^2\\
 				u_{N-1,2} - 3u_{N,2} + u_{N,3} &= -{\Delta y}^2
 			\end{align*}
-			\item AND $ j = N $
+			\item and $ j = N $
 			\begin{align*}
 				u_{N-1,N} + u_{N,N-1} - 4u_{N,N} + u_{N+1,N} + u_{N,N+1} &= -{\Delta y}^2\\
 				u_{N-1,N} + u_{N,N-1} - 2u_{N,N} &= -{\Delta y}^2
 			\end{align*}
-			\item OTHERWISE
+			\item otherwise
 			\begin{align*}
 				u_{N-1,j} + u_{N,j-1} - 4u_{N,j} + u_{N+1,j} + u_{N,j+1} &= -{\Delta y}^2\\
-				u_{N-1,j} + u_{N,j-1} - 3u_{N,j} + u_{N,j+1} &= -{\Delta y}^2
+				u_{N-1,j} + u_{N,j-1} - 3u_{N,j} + u_{N,j+1} &= -{\Delta y}^2,
 			\end{align*}
 		\end{itemize}
-		\item $ j = 2 $ AND $ 3\leq i\leq N-1 $
+		\item or, when $ j = 2 $ and $ 3\leq i\leq N-1 $
 		\begin{align*}
 			u_{i-1,2} + u_{i,1} - 4u_{i,2} + u_{i+1,2} + u_{i,3} &= -{\Delta y}^2\\
-			u_{i-1,2} - 4u_{i,2} + u_{i+1,2} + u_{i,3} &= -{\Delta y}^2
+			u_{i-1,2} - 4u_{i,2} + u_{i+1,2} + u_{i,3} &= -{\Delta y}^2,
 		\end{align*}
-		\item $ j = N $ AND $ 3\leq i\leq N-1 $
+		\item and, lastly when $ j = N $ and $ 3\leq i\leq N-1 $
 		\begin{align*}
 			u_{i-1,N} + u_{i,N-1} - 4u_{i,N} + u_{i+1,N} + u_{i,N+1} &= -{\Delta y}^2\\
 			u_{i-1,N} + u_{i,N-1} - 3u_{i,N} + u_{i+1,N} &= -{\Delta y}^2
@@ -140,7 +177,7 @@
 	\begin{equation}
 		k = (i-2)(N-1) + (j-1).
 	\end{equation}
-	We can then translate our discretization into this new system, starting with the corner (2,2):
+	We can then translate our discretization into this new system, giving nine total cases. Starting with the corner (2,2) we have
 	\begin{itemize}
 		\item $ (2,2) $
 		\begin{align*}
@@ -194,44 +231,54 @@
 		\item rows $ \left(N-2\right)\left(N-1\right)+\beta $ the diagonal is $ -3 $ for $ 1\leq\beta\leq N-2 $
 		\item row $ \left(N-1\right)^2 $ the diagonal is $ -2 $
 	\end{itemize}
-	We also have 4 other sub-diagonals that will all contain ones except where noted. These represent the following location:
+	We also have four other sub-diagonals that will all contain ones except where noted. These represent the following location:
 	\begin{itemize}
 		\item $ j-1 $ which is directly below the diagonal\\
-		In Julia these are the locations: \texttt{[2:(N-1)$^2$, 1:(N-1)$^2$-1]}\\
+		In Julia these are the locations: \texttt{\footnotesize[2:(N-1)$^2$, 1:(N-1)$^2$-1]}\\
 		Exception: the locations $ (\alpha(N-1) + 1,\alpha(N-1)) $ should be zero for $ 1\leq\alpha\leq N-2 $ 
 		\item $ j+1 $ which is directly above the diagonal\\
-		In Julia these are the locations: \texttt{[1:(N-1)$^2$-1, 2:(N-1)$^2$]}\\
+		In Julia these are the locations: \texttt{\footnotesize[1:(N-1)$^2$-1, 2:(N-1)$^2$]}\\
 		Exception: the locations $ (\alpha(N-1),\alpha(N-1)+1) $ should be zero for $ 1\leq\alpha\leq N-2 $ 
 		\item $ i-1 $ which are exactly $ N-1 $ below the diagonal\\
-		In Julia these are the locations: \texttt{[N:(N-1)$^2$, 1:(N-1)$^2$-(N-1)]}
+		In Julia these are the locations: \texttt{\footnotesize[N:(N-1)$^2$, 1:(N-1)$^2$-(N-1)]}
 		\item $ i+1 $ which are exactly $ N+1 $ above the diagonal\\
-		In Julia these are the locations: \texttt{[1:(N-1)$^2$-(N-1), N:(N-1)$^2$]}
+		In Julia these are the locations: \texttt{\footnotesize[1:(N-1)$^2$-(N-1), N:(N-1)$^2$]}
 	\end{itemize}
-	Once $ A $ is created it is probably easier to create a column vector of length $ (N-1)^2 $ in which every location contains $ -{\Delta y}^2 $. Once a solution is found via $ u = A\backslash b $ or CG, then $ u $ can be reshaped to the correct dimensions either manually\textemdash \texttt{i = floor((k-1)/(N-1)) + 2}; \texttt{j = mod(k-1,N-1) + 2}\textemdash or via the reshape function transposed\textemdash \texttt{U = reshape(u,N-1,N-1)$'$}. Using reshape without the transpose puts the solution in meshgrid format (with $ y $ as the columns and $ z $ as the rows) similar to looking at a cross-section.\\
+	Once $ A $ is created it is probably easier to create a column vector of length $ (N-1)^2 $ in which every location contains $ -{\Delta y}^2 $. Once a solution is found via $ u = A\backslash b $ or CG, then $ u $ can be reshaped to the correct dimensions either manually\textemdash \texttt{\footnotesize i = floor((k-1)/(N-1)) + 2}; \texttt{\footnotesize j = mod(k-1,N-1) + 2}\textemdash or via the reshape function transposed\textemdash \texttt{\footnotesize U = reshape(u,N-1,N-1)$'$}. Using reshape without the transpose puts the solution in meshgrid format (with $ y $ as the columns and $ z $ as the rows) similar to looking at a cross-section.\\
 	
-	\section{Example program run:}
-	Direct solve on CPU\\
-  0.042633 seconds (8.16 k allocations: 11.199 MiB, 51.33% gc time)\\
-norm between our solution and the exact solution =  1.443430e-05 
-\\-----------\\
-
-Native Julia CG solve on CPU\\
- 15.070843 seconds (34 allocations: 1.985 MiB)\\
-norm between our solution and the exact solution =  1.443430e-05 
-\\-----------\\
-
-Direct solve on GPU\\
-  1.129700 seconds (209 allocations: 9.750 KiB)\\
-norm between our solution and the exact solution =  1.443427e-05 
-\\-----------\\
-
-CG solve on GPU\\
-  3.191565 seconds (4.40 M allocations: 172.127 MiB, 0.92% gc time)\\
-norm between our solution and the exact solution =  1.443432e-05 
-\\-----------\\
-
+	\section{Results}
+	First, we ensured our solution was converging as expected by decreasing $ \Delta z $ by orders of 2, and checking to make sure the error was decreasing at the same rate.
+	\begin{center}
+		\renewcommand{\arraystretch}{2.0}
+		\begin{tabular}{c|c|c|c}
+			\hline\hline
+			$\displaystyle \Delta z $&$\displaystyle \varepsilon_{\Delta z} = \sqrt{z}\lVert u-e\rVert $&$ \displaystyle \Delta\varepsilon = \frac{\varepsilon_{2\Delta z}}{\varepsilon_{\Delta z}} $&$\displaystyle r = \log_2\left(\Delta\varepsilon\right) $\\
+			\hline
+			0.1&&&\\
+			0.05&&&\\
+			0.025&&&\\
+			0.0125&&&\\
+			\hline
+		\end{tabular}
+	\end{center}
+	We timed the one-dimensional problem using the four methods listed above and depict the results in the table below.
+	\begin{center}
+		\renewcommand{\arraystretch}{1.5}
+		\begin{tabular}{c|c|c|c}
+			\hline\hline
+			\textbf{Device}&\textbf{Method}&\textbf{Time [s]}&\textbf{Error~~$\sqrt{z}\lVert u-e\rVert $}\\
+			\hline
+			\multirow{2}{*}{CPU}&Direct&0.0426&$1.44\times 10^{-5}$\\
+			&CG&15.1&$1.44\times 10^{-5}$\\
+			\hline
+			\multirow{2}{*}{GPU}&Direct&1.13&$1.44\times 10^{-5}$\\
+			&CG&3.19&$1.44\times 10^{-5}$\\
+			\hline
+		\end{tabular}
+	\end{center}
+	Nick, can you then repeat the analysis for the 2D case please. Just reduce $ \Delta y $ by increments of 2, the rate of reduction $ r $ should be 4 in this case. Thanks!
 	\section{Code Listing}
-	Here is the code listing:
+	The code we wrote is attached below
 \begin{lstlisting}
 using Pkg
 Pkg.add("LinearAlgebra")
