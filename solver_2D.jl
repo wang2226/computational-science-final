@@ -22,48 +22,57 @@ using CUDAdrv
 
 Δz = 0.1
 z = 0:Δz:1
-n = length(z)
-N = (n-1)^2
-
+y = 0:Δz:1
+N = length(z)
 
 # create sparse matrix A
-Il = 2:N
-Jl = 1:N-1
-Iu = 1:N-1
-Ju = 2:N
 
-dl = ones(N-1)
-du = ones(N-1)
-d = -4 * ones(N)
-A = sparse(Il,Jl,dl,N,N) + sparse(Iu,Ju,du,N,N) + sparse(1:N,1:N,d,N,N)
+Imain = 1:(N-1)^2
+Jmain = 1:(N-1)^2
+
+Il = 2:(N-1)^2
+Jl = 1:((N-1)^2-1)
+Iu = 1:((N-1)^2-1)
+Ju = 2:(N-1)^2
+
+il = N:(N-1)^2
+jl = 1:((N-1)^2-(N-1))
+iu = 1:((N-1)^2-(N-1))
+ju = N:(N-1)^2
+
+dbig = ones((N-1)^2-1)
+dsmall = ones((N-1)^2-(N-1))
+dmain = -4*ones((N-1)^2)
+A = (sparse(Il,Jl,dbig,(N-1)^2,(N-1)^2) 
+    + sparse(Iu,Ju,dbig,(N-1)^2,(N-1)^2) 
+    + sparse(Imain,Jmain,dmain,(N-1)^2,(N-1)^2)
+    + sparse(il,jl,dsmall,(N-1)^2,(N-1)^2)
+    + sparse(iu,ju,dsmall,(N-1)^2,(N-1)^2))
 
 # rows α(N-1) the diagonal entry is -3
-for α=1:n-2
-    A[α*(n-1),α*(n-1)] = -3
+for α=1:N-2
+    A[α*(N-1),α*(N-1)] = -3
 end
 
 # rows (N-2)(N-1)+β the diagonal is -3
-for β=1:n-2
-    A[(n-2)*(n-1)+β,(n-2)*(n-1)+β] = -3
+for β=1:N-2
+    A[(N-2)*(N-1)+β,(N-2)*(N-1)+β] = -3
 end
 
 # rows (N-1)^2 the diagonal is -2
-A[(n-1)^2,(n-1)^2] = -2
+A[(N-1)^2,(N-1)^2] = -2
 
 # locations (α*(n-1)+1, α*(n-1)) should be zero
-for α=1:n-2
-    A[α*(n-1)+1,α*(n-1)] = 0
-end
-
 # locations (α*(n-1), α*(n-1)+1) should be zero
-for α=1:n-2
-    A[α*(n-1),α*(n-1)+1] = 0
+for α=1:N-2
+    A[α*(N-1)+1,α*(N-1)] = 0
+    A[α*(N-1),α*(N-1)+1] = 0
 end
 
 # print(Matrix(A))
 # print(size(A))
 
-b = -Δz * ones(N, 1)
+b = -Δz * ones((N-1)^2, 1)
 # print(b)
 # print(size(b))
 
@@ -71,8 +80,10 @@ b = -Δz * ones(N, 1)
 println("Direct solve on CPU")
 u_dummy_DSCPU = A \ b
 @time u_int_DSCPU = A \ b
-u_DSCPU = reshape(u_int_DSCPU, (n-1, n-1))
-u_DSCPU = transpose(u_DSCPU)
+u_DSCPU = reshape(u_int_DSCPU, (N-1, N-1))
+U_DSCPU = zeros(N,N)
+U_DSCPU[2:N,2:N] = u_DSCPU[:,:]
+#u_DSCPU = transpose(u_DSCPU)
 print(size(u_DSCPU))
 # @show umod
 # @printf "norm between our solution and the exact solution = \x1b[31m %e \x1b[0m\n" norm(u_DSCPU - exact(z))
@@ -84,9 +95,42 @@ println()
 println("Native Julia CG solve on CPU")
 u_dummy_CGCPU = cg(-A, -b)
 @time u_int_CGCPU = cg(-A, -b)
-u_DSCPU = reshape(u_int_DSCPU, (n-1, n-1))
-u_DSCPU = transpose(u_DSCPU)
+u_CGCPU = reshape(u_int_CGCPU, (N-1, N-1))
+U_CGCPU = zeros(N,N)
+U_CGCPU[2:N,2:N] = u_CGCPU[:,:]
+#u_CGCPU = transpose(u_CGCPU)
 # @printf "norm between our solution and the exact solution = \x1b[31m %e \x1b[0m\n" sqrt(Δz) * norm(u_CGCPU - exact(z))
 
 println("-----------")
 println()
+
+
+d_A = CuArrays.CUSPARSE.CuSparseMatrixCSC(A)
+d_b = CuArray(b)
+
+println("Direct solve on GPU")
+u_dummy_DSGPU = d_A \ d_b
+@time u_int_DSGPU = d_A \ d_b
+u_int_DSGPU_reg = Array(u_int_DSGPU)
+u_DSGPU = [0; u_int_DSGPU_reg]
+@printf "norm between our solution and the exact solution = \x1b[31m %e \x1b[0m\n" sqrt(Δz) * norm(u_DSGPU - exact(z))
+println("-----------")
+println()
+
+# CG solve on GPU
+d_A = CuArrays.CUSPARSE.CuSparseMatrixCSC(A)
+d_b = CuArray(b)
+u_cg = CuArray(zeros(size(d_b)))
+u_dummy = CuArray(zeros(size(d_b)))
+
+println("CG solve on GPU")
+# u_dummy_CGCPU = cg(-d_A, -d_b)
+cg!(u_dummy, d_A, d_b)
+# @time u_int_CGGPU = cg(-d_A, -d_b)
+@time cg!(u_cg, d_A, d_b)
+u_int_CGGPU_reg = Array(u_cg)
+u_CGGPU = [0; u_int_CGGPU_reg]
+@printf "norm between our solution and the exact solution = \x1b[31m %e \x1b[0m\n" sqrt(Δz) * norm(u_CGGPU - exact(z))
+println("-----------")
+println()
+

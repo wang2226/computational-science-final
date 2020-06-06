@@ -63,7 +63,7 @@ println("-----------")
 println()
 
 
-d_A = CuArray(A)
+d_A = CuArrays.CUSPARSE.CuSparseMatrixCSC(A)
 d_b = CuArray(b)
 
 println("Direct solve on GPU")
