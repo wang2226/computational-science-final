@@ -1,4 +1,4 @@
-#=
+
 using Pkg
 Pkg.add("LinearAlgebra")
 Pkg.add("SparseArrays")
@@ -7,7 +7,7 @@ Pkg.add("Printf")
 Pkg.add("CuArrays")
 Pkg.add("CUDAnative")
 Pkg.add("CUDAdrv")
-=#
+Pkg.add("Plots")
 
 using LinearAlgebra
 using SparseArrays
@@ -19,8 +19,9 @@ CuArrays.allowscalar(false)
 using CUDAnative
 using CUDAdrv
 
+using Plots
 
-Δz = 0.1
+Δz = 0.025
 z = 0:Δz:1
 y = 0:Δz:1
 N = length(z)
@@ -43,8 +44,8 @@ ju = N:(N-1)^2
 dbig = ones((N-1)^2-1)
 dsmall = ones((N-1)^2-(N-1))
 dmain = -4*ones((N-1)^2)
-A = (sparse(Il,Jl,dbig,(N-1)^2,(N-1)^2) 
-    + sparse(Iu,Ju,dbig,(N-1)^2,(N-1)^2) 
+A = (sparse(Il,Jl,dbig,(N-1)^2,(N-1)^2)
+    + sparse(Iu,Ju,dbig,(N-1)^2,(N-1)^2)
     + sparse(Imain,Jmain,dmain,(N-1)^2,(N-1)^2)
     + sparse(il,jl,dsmall,(N-1)^2,(N-1)^2)
     + sparse(iu,ju,dsmall,(N-1)^2,(N-1)^2))
@@ -72,7 +73,7 @@ end
 # print(Matrix(A))
 # print(size(A))
 
-b = -Δz * ones((N-1)^2, 1)
+b = -Δz^2 * ones((N-1)^2, 1)
 # print(b)
 # print(size(b))
 
@@ -84,9 +85,9 @@ u_DSCPU = reshape(u_int_DSCPU, (N-1, N-1))
 U_DSCPU = zeros(N,N)
 U_DSCPU[2:N,2:N] = u_DSCPU[:,:]
 #u_DSCPU = transpose(u_DSCPU)
-print(size(u_DSCPU))
+# print(size(u_DSCPU))
 # @show umod
-# @printf "norm between our solution and the exact solution = \x1b[31m %e \x1b[0m\n" norm(u_DSCPU - exact(z))
+@printf "norm between AU and b = \x1b[31m %e \x1b[0m\n" norm(A*u_int_DSCPU - b)
 println("-----------")
 println()
 
@@ -99,23 +100,28 @@ u_CGCPU = reshape(u_int_CGCPU, (N-1, N-1))
 U_CGCPU = zeros(N,N)
 U_CGCPU[2:N,2:N] = u_CGCPU[:,:]
 #u_CGCPU = transpose(u_CGCPU)
-# @printf "norm between our solution and the exact solution = \x1b[31m %e \x1b[0m\n" sqrt(Δz) * norm(u_CGCPU - exact(z))
+@printf "norm between AU and b = \x1b[31m %e \x1b[0m\n" norm(A*u_int_CGCPU - b)
 
 println("-----------")
 println()
 
-
-d_A = CuArrays.CUSPARSE.CuSparseMatrixCSC(A)
+#=
+# d_A = CuArrays.CUSPARSE.CuSparseMatrixCSC(A)
+d_A = CuArray(A)
 d_b = CuArray(b)
 
 println("Direct solve on GPU")
 u_dummy_DSGPU = d_A \ d_b
 @time u_int_DSGPU = d_A \ d_b
-u_int_DSGPU_reg = Array(u_int_DSGPU)
-u_DSGPU = [0; u_int_DSGPU_reg]
-@printf "norm between our solution and the exact solution = \x1b[31m %e \x1b[0m\n" sqrt(Δz) * norm(u_DSGPU - exact(z))
+u_DSGPU = Matrix(reshape(u_int_DSGPU, (N-1, N-1)))
+U_DSGPU = zeros(N,N)
+U_DSGPU[2:N,2:N] = u_DSGPU[:,:]
+@printf "norm between AU and b = \x1b[31m %e \x1b[0m\n" norm(d_A*u_int_DSGPU - d_b)
 println("-----------")
 println()
+=#
+
+
 
 # CG solve on GPU
 d_A = CuArrays.CUSPARSE.CuSparseMatrixCSC(A)
@@ -128,9 +134,15 @@ println("CG solve on GPU")
 cg!(u_dummy, d_A, d_b)
 # @time u_int_CGGPU = cg(-d_A, -d_b)
 @time cg!(u_cg, d_A, d_b)
-u_int_CGGPU_reg = Array(u_cg)
-u_CGGPU = [0; u_int_CGGPU_reg]
-@printf "norm between our solution and the exact solution = \x1b[31m %e \x1b[0m\n" sqrt(Δz) * norm(u_CGGPU - exact(z))
+u_CGGPU = Matrix(reshape(u_cg, (N-1, N-1)))
+U_CGGPU = zeros(N,N)
+U_CGGPU[2:N,2:N] = u_CGGPU[:,:]
+@printf "norm between AU and b = \x1b[31m %e \x1b[0m\n" norm(d_A*u_cg - d_b)
 println("-----------")
 println()
 
+
+# u for direct solve on CPU (surface)
+
+# plot(y,z,U_DSCPU,st=:surface,camera=(0,90))
+# png("2D_mid_res")

@@ -6,6 +6,7 @@ Pkg.add("Printf")
 Pkg.add("CuArrays")
 Pkg.add("CUDAnative")
 Pkg.add("CUDAdrv")
+Pkg.add("Plots")
 
 using LinearAlgebra
 using SparseArrays
@@ -16,8 +17,12 @@ using CuArrays
 CuArrays.allowscalar(false)
 using CUDAnative
 using CUDAdrv
+using Plots
 
+# this shows the diff between CG on CPU and GPU
 Δz = 5e-5
+
+# Δz = 1e-4
 z = 0:Δz:1
 N = length(z)
 
@@ -63,7 +68,8 @@ println("-----------")
 println()
 
 
-d_A = CuArrays.CUSPARSE.CuSparseMatrixCSC(A)
+# d_A = CuArrays.CUSPARSE.CuSparseMatrixCSC(A)
+d_A = CuArray(A)
 d_b = CuArray(b)
 
 println("Direct solve on GPU")
@@ -91,3 +97,10 @@ u_CGGPU = [0; u_int_CGGPU_reg]
 @printf "norm between our solution and the exact solution = \x1b[31m %e \x1b[0m\n" sqrt(Δz) * norm(u_CGGPU - exact(z))
 println("-----------")
 println()
+
+
+
+# plot u against z
+# u (x axis) z (y axis)
+# plot(u_DSCPU,z)
+# png("1D_mid_res")
