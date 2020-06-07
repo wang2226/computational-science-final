@@ -1,58 +1,62 @@
-This is LuaHBTeX, Version 1.12.0 (TeX Live 2020)  (format=lualatex 2020.4.7)  6 JUN 2020 18:10
+This is LuaHBTeX, Version 1.12.0 (MiKTeX 2.9.7440 64-bit)  (format=lualatex 2020.6.5)  7 JUN 2020 11:48
  restricted system commands enabled.
 **final_report.tex
 (./final_report.tex
 LaTeX2e <2020-02-02> patch level 5
-Lua module: luaotfload-main 2020-02-02 3.12 luaotfload entry point
-Lua module: luaotfload-init 2020-02-02 3.12 luaotfload submodule / initializatio
+Lua module: luaotfload-main 2020-05-06 3.14 luaotfload entry point
+Lua module: luaotfload-init 2020-05-06 3.14 luaotfload submodule / initializatio
 n
-Lua module: lualibs 2020-02-02 2.70 ConTeXt Lua standard libraries.
-Lua module: lualibs-extended 2020-02-02 2.70 ConTeXt Lua libraries -- extended c
+Lua module: lualibs 2020-05-01 2.71 ConTeXt Lua standard libraries.
+Lua module: lualibs-extended 2020-05-01 2.71 ConTeXt Lua libraries -- extended c
 ollection.
-Lua module: luaotfload-log 2020-02-02 3.12 luaotfload submodule / logging
-Lua module: luaotfload-parsers 2020-02-02 3.12 luaotfload submodule / filelist
-Lua module: luaotfload-configuration 2020-02-02 3.12 luaotfload submodule / conf
+Lua module: luaotfload-log 2020-05-06 3.14 luaotfload submodule / logging
+Lua module: luaotfload-parsers 2020-05-06 3.14 luaotfload submodule / filelist
+Lua module: luaotfload-configuration 2020-05-06 3.14 luaotfload submodule / conf
 ig file reader
-luaotfload | conf : Root cache directory is /Users/Bruce/Library/texlive/2020/te
-xmf-var/luatex-cache/generic-dev/names.
-luaotfload | init : Loading fontloader “fontloader-2020-01-26.lua” from kpse
--resolved path “/usr/local/texlive/2020/texmf-dist/tex/luatex/luaotfload/fontl
-oader-2020-01-26.lua”.
-Lua-only attribute luaotfload@state = 2
-Lua-only attribute luaotfload@noligature = 3
-Lua-only attribute luaotfload@syllabe = 4
-luaotfload | init : Context OpenType loader version “3.11”
+luaotfload | conf : Root cache directory is "C:/Users/phunter/AppData/Local/MiKT
+eX/2.9/luatex-cache/generic-dev/names".
+luaotfload | init : Loading fontloader "fontloader-2020-05-06.lua" from kpse-res
+olved path "C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/luatex/luaotf
+load/fontloader-2020-05-06.lua".
+Lua-only attribute luaotfload@noligature = 1
+Lua-only attribute luaotfload@syllabe = 2
+luaotfload | init : Context OpenType loader version 0x1.8e353f7ced917p+1
+Lua module: luaotfload-fallback 2020-05-06 3.14 luaotfload submodule / fallback
+Lua module: luaotfload-multiscript 2020-05-06 3.14 luaotfload submodule / multis
+cript
+Lua module: luaotfload-script 2020-05-06 3.14 luaotfload submodule / Script help
+ers
 Inserting `luaotfload.node_processor' at position 1 in `pre_linebreak_filter'.
 Inserting `luaotfload.node_processor' at position 1 in `hpack_filter'.
-Lua module: luaotfload-loaders 2020-02-02 3.12 luaotfload submodule / callback h
+Lua module: luaotfload-loaders 2020-05-06 3.14 luaotfload submodule / callback h
 andling
 Inserting `luaotfload.define_font' at position 1 in `define_font'.
-Lua module: luaotfload-database 2020-02-02 3.12 luaotfload submodule / database
-Lua module: luaotfload-unicode 2020-02-02 3.12 luaotfload submodule / Unicode he
+Lua module: luaotfload-database 2020-05-06 3.14 luaotfload submodule / database
+Lua module: luaotfload-unicode 2020-05-06 3.14 luaotfload submodule / Unicode he
 lpers
-Lua module: luaotfload-colors 2020-02-02 3.12 luaotfload submodule / color
-Lua-only attribute luaotfload_color_attribute = 5
-Lua module: luaotfload-resolvers 2020-02-02 3.12 luaotfload submodule / resolver
+Lua module: luaotfload-colors 2020-05-06 3.14 luaotfload submodule / color
+Lua-only attribute luaotfload_color_attribute = 3
+Lua module: luaotfload-resolvers 2020-05-06 3.14 luaotfload submodule / resolver
 s
-luaotfload | conf : Root cache directory is /Users/Bruce/Library/texlive/2020/te
-xmf-var/luatex-cache/generic-dev/names.
-Lua module: luaotfload-features 2020-02-02 3.12 luaotfload submodule / features
-Lua module: luaotfload-letterspace 2020-02-02 3.12 luaotfload submodule / color
-Lua module: luaotfload-embolden 2020-02-02 3.12 luaotfload submodule / color
-Lua module: luaotfload-notdef 2020-02-02 3.12 luaotfload submodule / color
-Lua module: luaotfload-harf-define 2020-02-02 3.12 luaotfload submodule / databa
+luaotfload | conf : Root cache directory is "C:/Users/phunter/AppData/Local/MiKT
+eX/2.9/luatex-cache/generic-dev/names".
+Lua module: luaotfload-features 2020-05-06 3.14 luaotfload submodule / features
+Lua module: luaotfload-harf-define 2020-05-06 3.14 luaotfload submodule / databa
 se
-Lua module: luaotfload-script 2020-02-02 3.12 luaotfload submodule / Script help
-ers
 Inserting `luaotfload.harf.strip_prefix' at position 1 in `find_opentype_file'.
 Inserting `luaotfload.harf.strip_prefix' at position 1 in `find_truetype_file'.
-Lua module: luaotfload-harf-plug 2020-02-02 3.12 luaotfload submodule / database
+Lua module: luaotfload-harf-plug 2020-05-06 3.14 luaotfload submodule / database
 Inserting `Harf pre_output_filter callback' at position 1 in `pre_output_filter'
 .
 Inserting `Harf wrapup_run callback' at position 1 in `wrapup_run'.
 Inserting `Harf finish_pdffile callback' at position 1 in `finish_pdffile'.
 Inserting `Harf glyph_info callback' at position 1 in `glyph_info'.
-Lua module: luaotfload-auxiliary 2020-02-02 3.12 luaotfload submodule / auxiliar
+Lua module: luaotfload-letterspace 2020-05-06 3.14 luaotfload submodule / color
+Lua module: luaotfload-embolden 2020-05-06 3.14 luaotfload submodule / color
+Lua module: luaotfload-notdef 2020-05-06 3.14 luaotfload submodule / color
+Lua module: luaotfload-suppress 2020-05-06 3.14 luaotfload submodule / suppress
+Lua module: luaotfload-szss 2020-05-06 3.14 luaotfload submodule / color
+Lua module: luaotfload-auxiliary 2020-05-06 3.14 luaotfload submodule / auxiliar
 y functions
 Inserting `luaotfload.aux.set_sscale_dimens' at position 1 in `luaotfload.patch_
 font'.
@@ -65,19 +69,17 @@ t_unsafe'.
 Inserting `luaotfload.aux.set_capheight' at position 4 in `luaotfload.patch_font
 '.
 Inserting `luaotfload.aux.set_xheight' at position 5 in `luaotfload.patch_font'.
-Lua module: luaotfload-fallback 2020-02-02 3.12 luaotfload submodule / fallback
-Lua module: luaotfload-multiscript 2020-02-02 3.12 luaotfload submodule / multis
-cript
-Lua module: luaotfload-tounicode 2020-02-02 3.12 luaotfload submodule / tounicod
+Lua module: luaotfload-tounicode 2020-05-06 3.14 luaotfload submodule / tounicod
 e
 Inserting `luaotfload.rewrite_fontname' at position 6 in `luaotfload.patch_font'
-. L3 programming layer <2020-03-06>
-(/usr/local/texlive/2020/texmf-dist/tex/latex/base/article.cls
+. L3 programming layer <2020-05-15>
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/latex/base/article.cls
+"
 Document Class: article 2019/12/20 v1.4l Standard LaTeX document class
-(/usr/local/texlive/2020/texmf-dist/tex/latex/base/size11.clo
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/latex/base/size11.clo"
 File: size11.clo 2019/12/20 v1.4l Standard LaTeX file (size option)
-luaotfload | db : Font names database loaded from /Users/Bruce/Library/texlive/2
-020/texmf-var/luatex-cache/generic-dev/names/luaotfload-names.luc)
+luaotfload | db : Font names database loaded from C:/Users/phunter/AppData/Local
+/MiKTeX/2.9/luatex-cache/generic-dev/names/luaotfload-names.luc)
 \c@part=\count163
 \c@section=\count164
 \c@subsection=\count165
@@ -90,22 +92,25 @@ luaotfload | db : Font names database loaded from /Users/Bruce/Library/texlive/2
 \belowcaptionskip=\skip48
 \bibindent=\dimen134
 )
-(/usr/local/texlive/2020/texmf-dist/tex/latex/base/fontenc.sty
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/latex/base/fontenc.sty
+"
 Package: fontenc 2020/02/11 v2.0o Standard LaTeX package
 LaTeX Font Info:    Trying to load font information for T1+lmr on input line 112
 .
-
-(/usr/local/texlive/2020/texmf-dist/tex/latex/lm/t1lmr.fd
+ ("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/latex/lm/t1lmr.fd"
 File: t1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 ))
-(/usr/local/texlive/2020/texmf-dist/tex/latex/bera/beramono.sty
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/latex/bera/beramono.st
+y"
 Package: beramono 2004/01/31 (WaS)
 
-(/usr/local/texlive/2020/texmf-dist/tex/latex/graphics/keyval.sty
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/latex/graphics/keyval.
+sty"
 Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
 \KV@toks@=\toks15
 ))
-(/usr/local/texlive/2020/texmf-dist/tex/latex/listings/listings.sty
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/latex/listings/listing
+s.sty"
 \lst@mode=\count171
 \lst@gtempboxa=\box45
 \lst@token=\toks16
@@ -119,27 +124,32 @@ Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
 \lst@lineno=\count176
 \lst@maxwidth=\dimen138
 
-(/usr/local/texlive/2020/texmf-dist/tex/latex/listings/lstmisc.sty
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/latex/listings/lstmisc
+.sty"
 File: lstmisc.sty 2020/03/24 1.8d (Carsten Heinz)
 \c@lstnumber=\count177
 \lst@skipnumbers=\count178
 \lst@framebox=\box46
 )
-(/usr/local/texlive/2020/texmf-dist/tex/latex/listings/listings.cfg
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/latex/listings/listing
+s.cfg"
 File: listings.cfg 2020/03/24 1.8d listings configuration
 ))
 Package: listings 2020/03/24 1.8d (Carsten Heinz)
 
-(/usr/local/texlive/2020/texmf-dist/tex/latex/xcolor/xcolor.sty
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/latex/xcolor/xcolor.st
+y"
 Package: xcolor 2016/05/11 v2.12 LaTeX color extensions (UK)
 
-(/usr/local/texlive/2020/texmf-dist/tex/latex/graphics-cfg/color.cfg
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/latex/graphics-cfg/col
+or.cfg"
 File: color.cfg 2016/01/02 v1.6 sample color configuration
 )
 Package xcolor Info: Package option `usenames' ignored on input line 216.
 Package xcolor Info: Driver file: luatex.def on input line 225.
 
-(/usr/local/texlive/2020/texmf-dist/tex/latex/graphics-def/luatex.def
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/latex/graphics-def/lua
+tex.def"
 File: luatex.def 2018/01/08 v1.0l Graphics/color driver for luatex
 )
 Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1348.
@@ -152,13 +162,15 @@ Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1369.
 Package xcolor Info: Model `Gray' substituted by `gray' on input line 1370.
 Package xcolor Info: Model `wave' substituted by `hsb' on input line 1371.
 
-(/usr/local/texlive/2020/texmf-dist/tex/latex/graphics/dvipsnam.def
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/latex/graphics/dvipsna
+m.def"
 File: dvipsnam.def 2016/06/17 v3.0m Driver-dependent file (DPC,SPQR)
 ))
-(/usr/local/texlive/2020/texmf-dist/tex/latex/ucs/ucs.sty
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/latex/ucs/ucs.sty"
 Package: ucs 2013/05/11 v2.2 UCS: Unicode input support
 
-(/usr/local/texlive/2020/texmf-dist/tex/latex/ucs/data/uni-global.def
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/latex/ucs/uni-global.d
+ef"
 File: uni-global.def 2013/05/13 UCS: Unicode global data
 )
 \uc@secondtry=\count179
@@ -166,7 +178,8 @@ File: uni-global.def 2013/05/13 UCS: Unicode global data
 \uc@combtoksb=\toks18
 \uc@temptokena=\toks19
 )
-(/usr/local/texlive/2020/texmf-dist/tex/latex/base/inputenc.sty
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/latex/base/inputenc.st
+y"
 Package: inputenc 2018/08/11 v1.3c Input encoding file
 \inpenc@prehook=\toks20
 \inpenc@posthook=\toks21
@@ -174,14 +187,17 @@ Package: inputenc 2018/08/11 v1.3c Input encoding file
 
 Package inputenc Warning: inputenc package ignored with utf8 based engines.
 
-) (/usr/local/texlive/2020/texmf-dist/tex/latex/multirow/multirow.sty
+)
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/latex/multirow/multiro
+w.sty"
 Package: multirow 2019/05/31 v2.5 Span multiple rows of a table
 \multirow@colwidth=\skip49
 \multirow@cntb=\count180
 \multirow@dima=\skip50
 \bigstrutjot=\dimen139
 )
-(/usr/local/texlive/2020/texmf-dist/tex/latex/tools/multicol.sty
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/latex/tools/multicol.s
+ty"
 Package: multicol 2019/12/09 v1.8y multicolumn formatting (FMi)
 \c@tracingmulticols=\count181
 \mult@box=\box47
@@ -251,10 +267,11 @@ Package: multicol 2019/12/09 v1.8y multicolumn formatting (FMi)
 \colbreak@box=\box92
 \mc@col@check@num=\count190
 )
-(/usr/local/texlive/2020/texmf-dist/tex/latex/mathtools/mathtools.sty
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/latex/mathtools/mathto
+ols.sty"
 Package: mathtools 2020/03/24 v1.24 mathematical typesetting tools
 
-(/usr/local/texlive/2020/texmf-dist/tex/latex/tools/calc.sty
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/latex/tools/calc.sty"
 Package: calc 2017/05/25 v4.3 Infix arithmetic (KKT,FJ)
 \calc@Acount=\count191
 \calc@Bcount=\count192
@@ -267,27 +284,34 @@ LaTeX Info: Redefining \addtolength on input line 81.
 \calc@Ccount=\count193
 \calc@Cskip=\skip55
 )
-(/usr/local/texlive/2020/texmf-dist/tex/latex/mathtools/mhsetup.sty
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/latex/mathtools/mhsetu
+p.sty"
 Package: mhsetup 2017/03/31 v1.3 programming setup (MH)
 )
-(/usr/local/texlive/2020/texmf-dist/tex/latex/amsmath/amsmath.sty
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/latex/amsmath/amsmath.
+sty"
 Package: amsmath 2020/01/20 v2.17e AMS math features
 \@mathmargin=\skip56
 
 For additional information on amsmath, use the `?' option.
-(/usr/local/texlive/2020/texmf-dist/tex/latex/amsmath/amstext.sty
+
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/latex/amsmath/amstext.
+sty"
 Package: amstext 2000/06/29 v2.01 AMS text
 
-(/usr/local/texlive/2020/texmf-dist/tex/latex/amsmath/amsgen.sty
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/latex/amsmath/amsgen.s
+ty"
 File: amsgen.sty 1999/11/30 v2.0 generic functions
 \@emptytoks=\toks22
 \ex@=\dimen151
 ))
-(/usr/local/texlive/2020/texmf-dist/tex/latex/amsmath/amsbsy.sty
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/latex/amsmath/amsbsy.s
+ty"
 Package: amsbsy 1999/11/29 v1.2d Bold Symbols
 \pmbraise@=\dimen152
 )
-(/usr/local/texlive/2020/texmf-dist/tex/latex/amsmath/amsopn.sty
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/latex/amsmath/amsopn.s
+ty"
 Package: amsopn 2016/03/08 v2.02 operator names
 )
 \inf@bad=\count194
@@ -344,13 +368,16 @@ LaTeX Info: Thecontrolsequence`\]'isalreadyrobust on input line 130.
 \xmathstrut@box=\box95
 \xmathstrut@dim=\dimen167
 )
-(/usr/local/texlive/2020/texmf-dist/tex/latex/geometry/geometry.sty
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/latex/geometry/geometr
+y.sty"
 Package: geometry 2020/01/02 v5.9 Page Geometry
 
-(/usr/local/texlive/2020/texmf-dist/tex/generic/iftex/ifvtex.sty
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/generic/iftex/ifvtex.s
+ty"
 Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
 
-(/usr/local/texlive/2020/texmf-dist/tex/generic/iftex/iftex.sty
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/generic/iftex/iftex.st
+y"
 Package: iftex 2020/03/06 v1.0d TeX engine tests
 ))
 \Gm@cnth=\count273
@@ -365,25 +392,35 @@ Package: iftex 2020/03/06 v1.0d TeX engine tests
 \Gm@layouthoffset=\dimen174
 \Gm@layoutvoffset=\dimen175
 \Gm@dimlist=\toks27
-)
-(/usr/local/texlive/2020/texmf-dist/tex/latex/siunitx/siunitx.sty
-(/usr/local/texlive/2020/texmf-dist/tex/latex/l3kernel/expl3.sty
-Package: expl3 2020-03-06 L3 programming layer (loader) 
 
-(/usr/local/texlive/2020/texmf-dist/tex/latex/l3backend/l3backend-pdfmode.def
-File: l3backend-pdfmode.def 2020-03-12 L3 backend support: PDF mode
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/latex/geometry/geometr
+y.cfg"))
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/latex/siunitx/siunitx.
+sty"
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/latex/l3kernel/expl3.s
+ty"
+Package: expl3 2020-05-15 L3 programming layer (loader) 
+
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/latex/l3backend/l3back
+end-pdfmode.def"
+File: l3backend-pdfmode.def 2020-05-05 L3 backend support: PDF mode
 \l__kernel_color_stack_int=\count276
 \l__pdf_internal_box=\box96
-)) (/usr/local/texlive/2020/texmf-dist/tex/latex/l3packages/xparse/xparse.sty
-Package: xparse 2020-03-06 L3 Experimental document command parser
+))
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/latex/l3packages/xpars
+e/xparse.sty"
+Package: xparse 2020-05-15 L3 Experimental document command parser
+
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/latex/l3packages/xpars
+e/xparse-generic.tex"
 \l__xparse_current_arg_int=\count277
 \g__xparse_grabber_int=\count278
 \l__xparse_m_args_int=\count279
 \l__xparse_v_nesting_int=\count280
-)
+))
 Package: siunitx 2020/02/25 v2.8b A comprehensive (SI) units package
 
-(/usr/local/texlive/2020/texmf-dist/tex/latex/tools/array.sty
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/latex/tools/array.sty"
 Package: array 2019/08/31 v2.4l Tabular extension package (FMi)
 \col@sep=\dimen176
 \ar@mcellbox=\box97
@@ -393,8 +430,9 @@ Package: array 2019/08/31 v2.4l Tabular extension package (FMi)
 \backup@length=\skip61
 \ar@cellbox=\box98
 )
-(/usr/local/texlive/2020/texmf-dist/tex/latex/l3packages/l3keys2e/l3keys2e.sty
-Package: l3keys2e 2020-03-06 LaTeX2e option processing using LaTeX3 keys
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/latex/l3packages/l3key
+s2e/l3keys2e.sty"
+Package: l3keys2e 2020-05-15 LaTeX2e option processing using LaTeX3 keys
 )
 \l__siunitx_tmp_box=\box99
 \l__siunitx_tmp_dim=\dimen178
@@ -436,10 +474,12 @@ Package: l3keys2e 2020-03-06 LaTeX2e option processing using LaTeX3 keys
 \l__siunitx_table_result_box=\box105
 \l__siunitx_table_number_align_skip=\skip64
 \l__siunitx_table_text_align_skip=\skip65
-(/usr/local/texlive/2020/texmf-dist/tex/latex/translator/translator.sty
-Package: translator 2019-05-31 v1.12a Easy translation of strings in LaTeX
+
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/latex/translator/trans
+lator.sty"
+Package: translator 2018/01/04 v1.12 Easy translation of strings in LaTeX
 ))
-(/usr/local/texlive/2020/texmf-dist/tex/latex/float/float.sty
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/latex/float/float.sty"
 Package: float 2001/11/08 v1.3d Float enhancements (AL)
 \c@float@type=\count298
 \float@exts=\toks29
@@ -447,16 +487,20 @@ Package: float 2001/11/08 v1.3d Float enhancements (AL)
 \@float@everytoks=\toks30
 \@floatcapt=\box107
 )
-(/usr/local/texlive/2020/texmf-dist/tex/latex/graphics/graphicx.sty
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/latex/graphics/graphic
+x.sty"
 Package: graphicx 2019/11/30 v1.2a Enhanced LaTeX Graphics (DPC,SPQR)
 
-(/usr/local/texlive/2020/texmf-dist/tex/latex/graphics/graphics.sty
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/latex/graphics/graphic
+s.sty"
 Package: graphics 2019/11/30 v1.4a Standard LaTeX Graphics (DPC,SPQR)
 
-(/usr/local/texlive/2020/texmf-dist/tex/latex/graphics/trig.sty
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/latex/graphics/trig.st
+y"
 Package: trig 2016/01/03 v1.10 sin cos tan (DPC)
 )
-(/usr/local/texlive/2020/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/latex/graphics-cfg/gra
+phics.cfg"
 File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
 )
 Package graphics Info: Driver file: luatex.def on input line 105.
@@ -464,38 +508,50 @@ Package graphics Info: Driver file: luatex.def on input line 105.
 \Gin@req@height=\dimen190
 \Gin@req@width=\dimen191
 )
-(/usr/local/texlive/2020/texmf-dist/tex/latex/pgf/frontendlayer/tikz.sty
-(/usr/local/texlive/2020/texmf-dist/tex/latex/pgf/basiclayer/pgf.sty
-(/usr/local/texlive/2020/texmf-dist/tex/latex/pgf/utilities/pgfrcs.sty
-(/usr/local/texlive/2020/texmf-dist/tex/generic/pgf/utilities/pgfutil-common.te
-x
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/latex/pgf/frontendlaye
+r/tikz.sty"
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/latex/pgf/basiclayer/p
+gf.sty"
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/latex/pgf/utilities/pg
+frcs.sty"
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/generic/pgf/utilities/
+pgfutil-common.tex"
 \pgfutil@everybye=\toks31
 \pgfutil@tempdima=\dimen192
 \pgfutil@tempdimb=\dimen193
 
-(/usr/local/texlive/2020/texmf-dist/tex/generic/pgf/utilities/pgfutil-common-li
-sts.tex))
-(/usr/local/texlive/2020/texmf-dist/tex/generic/pgf/utilities/pgfutil-latex.def
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/generic/pgf/utilities/
+pgfutil-common-lists.tex"))
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/generic/pgf/utilities/
+pgfutil-latex.def"
 \pgfutil@abb=\box108
-(/usr/local/texlive/2020/texmf-dist/tex/latex/ms/everyshi.sty
+
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/latex/ms/everyshi.sty"
 Package: everyshi 2001/05/15 v3.00 EveryShipout Package (MS)
 ))
-(/usr/local/texlive/2020/texmf-dist/tex/generic/pgf/utilities/pgfrcs.code.tex
-(/usr/local/texlive/2020/texmf-dist/tex/generic/pgf/pgf.revision.tex)
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/generic/pgf/utilities/
+pgfrcs.code.tex"
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/generic/pgf/pgf.revisi
+on.tex")
 Package: pgfrcs 2020/01/08 v3.1.5b (3.1.5b)
 ))
 Package: pgf 2020/01/08 v3.1.5b (3.1.5b)
 
-(/usr/local/texlive/2020/texmf-dist/tex/latex/pgf/basiclayer/pgfcore.sty
-(/usr/local/texlive/2020/texmf-dist/tex/latex/pgf/systemlayer/pgfsys.sty
-(/usr/local/texlive/2020/texmf-dist/tex/generic/pgf/systemlayer/pgfsys.code.tex
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/latex/pgf/basiclayer/p
+gfcore.sty"
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/latex/pgf/systemlayer/
+pgfsys.sty"
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/generic/pgf/systemlaye
+r/pgfsys.code.tex"
 Package: pgfsys 2020/01/08 v3.1.5b (3.1.5b)
-(/usr/local/texlive/2020/texmf-dist/tex/generic/pgf/utilities/pgfkeys.code.tex
+
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/generic/pgf/utilities/
+pgfkeys.code.tex"
 \pgfkeys@pathtoks=\toks32
 \pgfkeys@temptoks=\toks33
 
-(/usr/local/texlive/2020/texmf-dist/tex/generic/pgf/utilities/pgfkeysfiltered.c
-ode.tex
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/generic/pgf/utilities/
+pgfkeysfiltered.code.tex"
 \pgfkeys@tmptoks=\toks34
 ))
 \pgf@x=\dimen194
@@ -519,35 +575,42 @@ ode.tex
 \t@pgf@tokc=\toks37
 \pgf@sys@id@count=\count303
 
-(/usr/local/texlive/2020/texmf-dist/tex/generic/pgf/systemlayer/pgf.cfg
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/generic/pgf/systemlaye
+r/pgf.cfg"
 File: pgf.cfg 2020/01/08 v3.1.5b (3.1.5b)
 )
 Driver file for pgf: pgfsys-luatex.def
 
-(/usr/local/texlive/2020/texmf-dist/tex/generic/pgf/systemlayer/pgfsys-luatex.d
-ef
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/generic/pgf/systemlaye
+r/pgfsys-luatex.def"
 File: pgfsys-luatex.def 2020/01/08 v3.1.5b (3.1.5b)
 
-(/usr/local/texlive/2020/texmf-dist/tex/generic/pgf/systemlayer/pgfsys-common-p
-df.def
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/generic/pgf/systemlaye
+r/pgfsys-common-pdf.def"
 File: pgfsys-common-pdf.def 2020/01/08 v3.1.5b (3.1.5b)
 )))
-(/usr/local/texlive/2020/texmf-dist/tex/generic/pgf/systemlayer/pgfsyssoftpath.
-code.tex
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/generic/pgf/systemlaye
+r/pgfsyssoftpath.code.tex"
 File: pgfsyssoftpath.code.tex 2020/01/08 v3.1.5b (3.1.5b)
 \pgfsyssoftpath@smallbuffer@items=\count304
 \pgfsyssoftpath@bigbuffer@items=\count305
 )
-(/usr/local/texlive/2020/texmf-dist/tex/generic/pgf/systemlayer/pgfsysprotocol.
-code.tex
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/generic/pgf/systemlaye
+r/pgfsysprotocol.code.tex"
 File: pgfsysprotocol.code.tex 2020/01/08 v3.1.5b (3.1.5b)
 ))
-(/usr/local/texlive/2020/texmf-dist/tex/generic/pgf/basiclayer/pgfcore.code.tex
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/generic/pgf/basiclayer
+/pgfcore.code.tex"
 Package: pgfcore 2020/01/08 v3.1.5b (3.1.5b)
-(/usr/local/texlive/2020/texmf-dist/tex/generic/pgf/math/pgfmath.code.tex
-(/usr/local/texlive/2020/texmf-dist/tex/generic/pgf/math/pgfmathcalc.code.tex
-(/usr/local/texlive/2020/texmf-dist/tex/generic/pgf/math/pgfmathutil.code.tex)
-(/usr/local/texlive/2020/texmf-dist/tex/generic/pgf/math/pgfmathparser.code.tex
+
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/generic/pgf/math/pgfma
+th.code.tex"
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/generic/pgf/math/pgfma
+thcalc.code.tex"
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/generic/pgf/math/pgfma
+thutil.code.tex")
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/generic/pgf/math/pgfma
+thparser.code.tex"
 \pgfmath@dimen=\dimen260
 \pgfmath@count=\count306
 \pgfmath@box=\box109
@@ -555,29 +618,32 @@ Package: pgfcore 2020/01/08 v3.1.5b (3.1.5b)
 \pgfmath@stack@operand=\toks39
 \pgfmath@stack@operation=\toks40
 )
-(/usr/local/texlive/2020/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.code.
-tex
-(/usr/local/texlive/2020/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.basic
-.code.tex)
-(/usr/local/texlive/2020/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.trigo
-nometric.code.tex)
-(/usr/local/texlive/2020/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.rando
-m.code.tex)
-(/usr/local/texlive/2020/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.compa
-rison.code.tex)
-(/usr/local/texlive/2020/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.base.
-code.tex)
-(/usr/local/texlive/2020/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.round
-.code.tex)
-(/usr/local/texlive/2020/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.misc.
-code.tex)
-(/usr/local/texlive/2020/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.integ
-erarithmetics.code.tex)))
-(/usr/local/texlive/2020/texmf-dist/tex/generic/pgf/math/pgfmathfloat.code.tex
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/generic/pgf/math/pgfma
+thfunctions.code.tex"
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/generic/pgf/math/pgfma
+thfunctions.basic.code.tex")
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/generic/pgf/math/pgfma
+thfunctions.trigonometric.code.tex")
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/generic/pgf/math/pgfma
+thfunctions.random.code.tex")
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/generic/pgf/math/pgfma
+thfunctions.comparison.code.tex")
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/generic/pgf/math/pgfma
+thfunctions.base.code.tex")
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/generic/pgf/math/pgfma
+thfunctions.round.code.tex")
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/generic/pgf/math/pgfma
+thfunctions.misc.code.tex")
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/generic/pgf/math/pgfma
+thfunctions.integerarithmetics.code.tex")))
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/generic/pgf/math/pgfma
+thfloat.code.tex"
 \c@pgfmathroundto@lastzeros=\count307
-)) (/usr/local/texlive/2020/texmf-dist/tex/generic/pgf/math/pgfint.code.tex)
-(/usr/local/texlive/2020/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepoints.co
-de.tex
+))
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/generic/pgf/math/pgfin
+t.code.tex")
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/generic/pgf/basiclayer
+/pgfcorepoints.code.tex"
 File: pgfcorepoints.code.tex 2020/01/08 v3.1.5b (3.1.5b)
 \pgf@picminx=\dimen261
 \pgf@picmaxx=\dimen262
@@ -594,126 +660,133 @@ File: pgfcorepoints.code.tex 2020/01/08 v3.1.5b (3.1.5b)
 \pgf@zx=\dimen273
 \pgf@zy=\dimen274
 )
-(/usr/local/texlive/2020/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepathconst
-ruct.code.tex
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/generic/pgf/basiclayer
+/pgfcorepathconstruct.code.tex"
 File: pgfcorepathconstruct.code.tex 2020/01/08 v3.1.5b (3.1.5b)
 \pgf@path@lastx=\dimen275
 \pgf@path@lasty=\dimen276
 )
-(/usr/local/texlive/2020/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepathusage
-.code.tex
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/generic/pgf/basiclayer
+/pgfcorepathusage.code.tex"
 File: pgfcorepathusage.code.tex 2020/01/08 v3.1.5b (3.1.5b)
 \pgf@shorten@end@additional=\dimen277
 \pgf@shorten@start@additional=\dimen278
 )
-(/usr/local/texlive/2020/texmf-dist/tex/generic/pgf/basiclayer/pgfcorescopes.co
-de.tex
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/generic/pgf/basiclayer
+/pgfcorescopes.code.tex"
 File: pgfcorescopes.code.tex 2020/01/08 v3.1.5b (3.1.5b)
 \pgfpic=\box110
 \pgf@hbox=\box111
 \pgf@layerbox@main=\box112
 \pgf@picture@serial@count=\count308
 )
-(/usr/local/texlive/2020/texmf-dist/tex/generic/pgf/basiclayer/pgfcoregraphicst
-ate.code.tex
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/generic/pgf/basiclayer
+/pgfcoregraphicstate.code.tex"
 File: pgfcoregraphicstate.code.tex 2020/01/08 v3.1.5b (3.1.5b)
 \pgflinewidth=\dimen279
 )
-(/usr/local/texlive/2020/texmf-dist/tex/generic/pgf/basiclayer/pgfcoretransform
-ations.code.tex
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/generic/pgf/basiclayer
+/pgfcoretransformations.code.tex"
 File: pgfcoretransformations.code.tex 2020/01/08 v3.1.5b (3.1.5b)
 \pgf@pt@x=\dimen280
 \pgf@pt@y=\dimen281
 \pgf@pt@temp=\dimen282
 )
-(/usr/local/texlive/2020/texmf-dist/tex/generic/pgf/basiclayer/pgfcorequick.cod
-e.tex
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/generic/pgf/basiclayer
+/pgfcorequick.code.tex"
 File: pgfcorequick.code.tex 2020/01/08 v3.1.5b (3.1.5b)
 )
-(/usr/local/texlive/2020/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreobjects.c
-ode.tex
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/generic/pgf/basiclayer
+/pgfcoreobjects.code.tex"
 File: pgfcoreobjects.code.tex 2020/01/08 v3.1.5b (3.1.5b)
 )
-(/usr/local/texlive/2020/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepathproce
-ssing.code.tex
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/generic/pgf/basiclayer
+/pgfcorepathprocessing.code.tex"
 File: pgfcorepathprocessing.code.tex 2020/01/08 v3.1.5b (3.1.5b)
 )
-(/usr/local/texlive/2020/texmf-dist/tex/generic/pgf/basiclayer/pgfcorearrows.co
-de.tex
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/generic/pgf/basiclayer
+/pgfcorearrows.code.tex"
 File: pgfcorearrows.code.tex 2020/01/08 v3.1.5b (3.1.5b)
 \pgfarrowsep=\dimen283
 )
-(/usr/local/texlive/2020/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreshade.cod
-e.tex
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/generic/pgf/basiclayer
+/pgfcoreshade.code.tex"
 File: pgfcoreshade.code.tex 2020/01/08 v3.1.5b (3.1.5b)
 \pgf@max=\dimen284
 \pgf@sys@shading@range@num=\count309
 \pgf@shadingcount=\count310
 )
-(/usr/local/texlive/2020/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreimage.cod
-e.tex
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/generic/pgf/basiclayer
+/pgfcoreimage.code.tex"
 File: pgfcoreimage.code.tex 2020/01/08 v3.1.5b (3.1.5b)
 
-(/usr/local/texlive/2020/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreexternal.
-code.tex
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/generic/pgf/basiclayer
+/pgfcoreexternal.code.tex"
 File: pgfcoreexternal.code.tex 2020/01/08 v3.1.5b (3.1.5b)
 \pgfexternal@startupbox=\box113
 ))
-(/usr/local/texlive/2020/texmf-dist/tex/generic/pgf/basiclayer/pgfcorelayers.co
-de.tex
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/generic/pgf/basiclayer
+/pgfcorelayers.code.tex"
 File: pgfcorelayers.code.tex 2020/01/08 v3.1.5b (3.1.5b)
 )
-(/usr/local/texlive/2020/texmf-dist/tex/generic/pgf/basiclayer/pgfcoretranspare
-ncy.code.tex
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/generic/pgf/basiclayer
+/pgfcoretransparency.code.tex"
 File: pgfcoretransparency.code.tex 2020/01/08 v3.1.5b (3.1.5b)
 )
-(/usr/local/texlive/2020/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepatterns.
-code.tex
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/generic/pgf/basiclayer
+/pgfcorepatterns.code.tex"
 File: pgfcorepatterns.code.tex 2020/01/08 v3.1.5b (3.1.5b)
 )
-(/usr/local/texlive/2020/texmf-dist/tex/generic/pgf/basiclayer/pgfcorerdf.code.
-tex
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/generic/pgf/basiclayer
+/pgfcorerdf.code.tex"
 File: pgfcorerdf.code.tex 2020/01/08 v3.1.5b (3.1.5b)
 )))
-(/usr/local/texlive/2020/texmf-dist/tex/generic/pgf/modules/pgfmoduleshapes.cod
-e.tex
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/generic/pgf/modules/pg
+fmoduleshapes.code.tex"
 File: pgfmoduleshapes.code.tex 2020/01/08 v3.1.5b (3.1.5b)
 \pgfnodeparttextbox=\box114
 )
-(/usr/local/texlive/2020/texmf-dist/tex/generic/pgf/modules/pgfmoduleplot.code.
-tex
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/generic/pgf/modules/pg
+fmoduleplot.code.tex"
 File: pgfmoduleplot.code.tex 2020/01/08 v3.1.5b (3.1.5b)
 )
-(/usr/local/texlive/2020/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version
--0-65.sty
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/latex/pgf/compatibilit
+y/pgfcomp-version-0-65.sty"
 Package: pgfcomp-version-0-65 2020/01/08 v3.1.5b (3.1.5b)
 \pgf@nodesepstart=\dimen285
 \pgf@nodesepend=\dimen286
 )
-(/usr/local/texlive/2020/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version
--1-18.sty
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/latex/pgf/compatibilit
+y/pgfcomp-version-1-18.sty"
 Package: pgfcomp-version-1-18 2020/01/08 v3.1.5b (3.1.5b)
 ))
-(/usr/local/texlive/2020/texmf-dist/tex/latex/pgf/utilities/pgffor.sty
-(/usr/local/texlive/2020/texmf-dist/tex/latex/pgf/utilities/pgfkeys.sty
-(/usr/local/texlive/2020/texmf-dist/tex/generic/pgf/utilities/pgfkeys.code.tex))
- (/usr/local/texlive/2020/texmf-dist/tex/latex/pgf/math/pgfmath.sty
-(/usr/local/texlive/2020/texmf-dist/tex/generic/pgf/math/pgfmath.code.tex))
-(/usr/local/texlive/2020/texmf-dist/tex/generic/pgf/utilities/pgffor.code.tex
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/latex/pgf/utilities/pg
+ffor.sty"
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/latex/pgf/utilities/pg
+fkeys.sty"
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/generic/pgf/utilities/
+pgfkeys.code.tex"))
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/latex/pgf/math/pgfmath
+.sty"
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/generic/pgf/math/pgfma
+th.code.tex"))
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/generic/pgf/utilities/
+pgffor.code.tex"
 Package: pgffor 2020/01/08 v3.1.5b (3.1.5b)
 
-(/usr/local/texlive/2020/texmf-dist/tex/generic/pgf/math/pgfmath.code.tex)
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/generic/pgf/math/pgfma
+th.code.tex")
 \pgffor@iter=\dimen287
 \pgffor@skip=\dimen288
 \pgffor@stack=\toks41
 \pgffor@toks=\toks42
 ))
-(/usr/local/texlive/2020/texmf-dist/tex/generic/pgf/frontendlayer/tikz/tikz.cod
-e.tex
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/generic/pgf/frontendla
+yer/tikz/tikz.code.tex"
 Package: tikz 2020/01/08 v3.1.5b (3.1.5b)
 
-(/usr/local/texlive/2020/texmf-dist/tex/generic/pgf/libraries/pgflibraryplothan
-dlers.code.tex
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/generic/pgf/libraries/
+pgflibraryplothandlers.code.tex"
 File: pgflibraryplothandlers.code.tex 2020/01/08 v3.1.5b (3.1.5b)
 \pgf@plot@mark@count=\count311
 \pgfplotmarksize=\dimen289
@@ -735,8 +808,8 @@ File: pgflibraryplothandlers.code.tex 2020/01/08 v3.1.5b (3.1.5b)
 \tikznumberofcurrentchild=\count314
 \tikz@fig@count=\count315
 
-(/usr/local/texlive/2020/texmf-dist/tex/generic/pgf/modules/pgfmodulematrix.cod
-e.tex
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/generic/pgf/modules/pg
+fmodulematrix.code.tex"
 File: pgfmodulematrix.code.tex 2020/01/08 v3.1.5b (3.1.5b)
 \pgfmatrixcurrentrow=\count316
 \pgfmatrixcurrentcolumn=\count317
@@ -744,16 +817,16 @@ File: pgfmodulematrix.code.tex 2020/01/08 v3.1.5b (3.1.5b)
 )
 \tikz@expandcount=\count319
 
-(/usr/local/texlive/2020/texmf-dist/tex/generic/pgf/frontendlayer/tikz/librarie
-s/tikzlibrarytopaths.code.tex
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/generic/pgf/frontendla
+yer/tikz/libraries/tikzlibrarytopaths.code.tex"
 File: tikzlibrarytopaths.code.tex 2020/01/08 v3.1.5b (3.1.5b)
 )))
-(/usr/local/texlive/2020/texmf-dist/tex/generic/pgf/frontendlayer/tikz/librarie
-s/tikzlibrarypatterns.code.tex
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/generic/pgf/frontendla
+yer/tikz/libraries/tikzlibrarypatterns.code.tex"
 File: tikzlibrarypatterns.code.tex 2020/01/08 v3.1.5b (3.1.5b)
 
-(/usr/local/texlive/2020/texmf-dist/tex/generic/pgf/libraries/pgflibrarypattern
-s.code.tex
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/generic/pgf/libraries/
+pgflibrarypatterns.code.tex"
 File: pgflibrarypatterns.code.tex 2020/01/08 v3.1.5b (3.1.5b)
 )) (./final_report.aux)
 \openout1 = final_report.aux
@@ -770,7 +843,7 @@ LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 51.
 LaTeX Font Info:    Trying to load font information for TS1+cmr on input line 51
 .
 
-(/usr/local/texlive/2020/texmf-dist/tex/latex/base/ts1cmr.fd
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/latex/base/ts1cmr.fd"
 File: ts1cmr.fd 2019/12/16 v2.5j Standard LaTeX font definitions
 )
 LaTeX Font Info:    ... okay on input line 51.
@@ -782,7 +855,8 @@ LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 51.
 LaTeX Font Info:    ... okay on input line 51.
 \c@lstlisting=\count320
 
-(/usr/local/texlive/2020/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/context/base/mkii/supp
+-pdf.mkii"
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count321
 \scratchdimen=\dimen298
@@ -795,16 +869,14 @@ LaTeX Font Info:    ... okay on input line 51.
 \MPnumerator=\count325
 \makeMPintoPDFobject=\count326
 \everyMPtoPDFconversion=\toks44
-) (/usr/local/texlive/2020/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
+)
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/latex/epstopdf-pkg/eps
+topdf-base.sty"
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
 Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 48
 5.
-
-(/usr/local/texlive/2020/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
-File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
-
-))
-(/usr/local/texlive/2020/texmf-dist/tex/latex/ucs/ucsencs.def
+)
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/latex/ucs/ucsencs.def"
 File: ucsencs.def 2011/01/21 Fixes to fontencodings LGR, T3
 )
 *geometry* driver: auto-detecting
@@ -842,11 +914,12 @@ File: ucsencs.def 2011/01/21 Fixes to fontencodings LGR, T3
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
 
-(/usr/local/texlive/2020/texmf-dist/tex/latex/translator/translator-basic-dicti
-onary-English.dict
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/latex/translator/trans
+lator-basic-dictionary-English.dict"
 Dictionary: translator-basic-dictionary, Language: English 
 )
-(/usr/local/texlive/2020/texmf-dist/tex/latex/siunitx/siunitx-abbreviations.cfg
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/latex/siunitx/siunitx-
+abbreviations.cfg"
 File: siunitx-abbreviations.cfg 2017/11/26 v2.7k siunitx: Abbreviated units
 ) ABD: EveryShipout initializing macros
 Overfull \hbox (10.58363pt too wide) in paragraph at lines 69--70
@@ -856,72 +929,80 @@ forward centered-difference
 
 [1
 
-{/usr/local/texlive/2020/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
+{C:/Users/phunter/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}]
 [2] [3]
 LaTeX Font Info:    Trying to load font information for T1+fvm on input line 237
 .
- (/usr/local/texlive/2020/texmf-dist/tex/latex/bera/t1fvm.fd
+
+("C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/tex/latex/bera/t1fvm.fd"
 File: t1fvm.fd 2004/09/07 scalable font definitions for T1/fvm.
-) [4]
+)
+[4]
 Underfull \hbox (badness 10000) in paragraph at lines 247--248
 
  []
 
-<1D_low_res.png, id=31, 602.25pt x 401.5pt>
+<1D_low_res.png, id=30, 602.25pt x 401.5pt>
 File: 1D_low_res.png Graphic file (type png)
 <use 1D_low_res.png>
-Package luatex.def Info: 1D_low_res.png  used on input line 281.
+Package luatex.def Info: 1D_low_res.png  used on input line 253.
 (luatex.def)             Requested size: 301.12425pt x 200.7495pt.
-[5]
-<2D_low_res.png, id=37, 602.25pt x 401.5pt>
+[5<./1D_low_res.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 287--288
+
+ []
+
+[6]
+<2D_low_res.png, id=39, 602.25pt x 401.5pt>
 File: 2D_low_res.png Graphic file (type png)
 <use 2D_low_res.png>
-Package luatex.def Info: 2D_low_res.png  used on input line 316.
+Package luatex.def Info: 2D_low_res.png  used on input line 323.
 (luatex.def)             Requested size: 301.12425pt x 200.7495pt.
- [6<./1D_low_res.png>]
-<2D_mid_res.png, id=41, 602.25pt x 401.5pt>
+<2D_mid_res.png, id=40, 602.25pt x 401.5pt>
 File: 2D_mid_res.png Graphic file (type png)
 <use 2D_mid_res.png>
-Package luatex.def Info: 2D_mid_res.png  used on input line 319.
+Package luatex.def Info: 2D_mid_res.png  used on input line 326.
 (luatex.def)             Requested size: 301.12425pt x 200.7495pt.
-<2D_high_res.png, id=42, 602.25pt x 401.5pt>
+<2D_high_res.png, id=41, 602.25pt x 401.5pt>
 File: 2D_high_res.png Graphic file (type png)
 <use 2D_high_res.png>
-Package luatex.def Info: 2D_high_res.png  used on input line 322.
+Package luatex.def Info: 2D_high_res.png  used on input line 329.
 (luatex.def)             Requested size: 301.12425pt x 200.7495pt.
- [7<./2D_low_res.png><./2D_mid_res.png><./2D_high_res.png>] [8] (./final_report
-.aux))
+ [7<./2D_low_res.png><./2D_mid_res.png>] [8<./2D_high_res.png>]
+(./final_report.aux))
 
 Here is how much of LuaTeX's memory you used:
- 18751 strings out of 480992
+ 18759 strings out of 480883
  100000,662416 words of node,token memory allocated
  1726 words of node memory still in use:
    31 hlist, 5 vlist, 4 rule, 8 math, 20 glue, 20 kern, 73 glyph, 43 attribute, 
 63 glue_spec, 43 attribute_list, 2 write nodes
-   avail lists: 2:700,3:134,4:30,5:229,6:16,7:2286,8:54,9:379,10:9,11:118
- 35584 multiletter control sequences out of 65536+600000
+   avail lists: 2:700,3:134,4:30,5:229,6:16,7:2207,8:54,9:379,10:9,11:132
+ 35701 multiletter control sequences out of 65536+200000
  76 fonts using 6709195 bytes
- 60i,14n,61p,670b,461s stack positions out of 5000i,500n,10000p,200000b,100000s
-{/usr/local/texlive/2020/texmf-dist/fonts/enc/dvips/base/8r.enc}{/usr/local/texl
-ive/2020/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}{/usr/local/texlive/2020/texmf-
-dist/fonts/enc/dvips/lm/lm-ts1.enc}</usr/local/texlive/2020/texmf-dist/fonts/typ
-e1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1
-/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/p
-ublic/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/publ
-ic/amsfonts/cm/cmr10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/
-amsfonts/cm/cmr6.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsf
-onts/cm/cmr8.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts
-/cm/cmsy10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/c
-m/cmsy6.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/c
-msy8.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/bera/fvmr8a.pfb>
-</usr/local/texlive/2020/texmf-dist/fonts/type1/public/lm/lmbx10.pfb></usr/local
-/texlive/2020/texmf-dist/fonts/type1/public/lm/lmbx12.pfb></usr/local/texlive/20
-20/texmf-dist/fonts/type1/public/lm/lmr10.pfb></usr/local/texlive/2020/texmf-dis
-t/fonts/type1/public/lm/lmr12.pfb>
-Output written on final_report.pdf (8 pages, 481093 bytes).
+ 60i,14n,61p,670b,461s stack positions out of 5000i,500n,10000p,200000b,50000s
+{C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/fonts/enc/dvips/base/8r.enc}
+{C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/fonts/enc/dvips/lm/lm-ec.enc
+}{C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/fonts/enc/dvips/lm/lm-ts1.e
+nc}<C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfon
+ts/cm/cmex10.pfb><C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/fonts/type1
+/public/amsfonts/cm/cmmi10.pfb><C:/Users/phunter/AppData/Local/Programs/MiKTeX 2
+.9/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Users/phunter/AppData/Local/Prog
+rams/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/phunter/AppDa
+ta/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr6.pfb><C:/Users/p
+hunter/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr8.pfb
+><C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts
+/cm/cmsy10.pfb><C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/p
+ublic/amsfonts/cm/cmsy6.pfb><C:/Users/phunter/AppData/Local/Programs/MiKTeX 2.9/
+fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Users/phunter/AppData/Local/Program
+s/MiKTeX 2.9/fonts/type1/bera/fvmr8a.pfb><C:/Users/phunter/AppData/Local/Program
+s/MiKTeX 2.9/fonts/type1/public/lm/lmbx10.pfb><C:/Users/phunter/AppData/Local/Pr
+ograms/MiKTeX 2.9/fonts/type1/public/lm/lmbx12.pfb><C:/Users/phunter/AppData/Loc
+al/Programs/MiKTeX 2.9/fonts/type1/public/lm/lmr10.pfb><C:/Users/phunter/AppData
+/Local/Programs/MiKTeX 2.9/fonts/type1/public/lm/lmr12.pfb>
+Output written on final_report.pdf (8 pages, 494019 bytes).
 
-PDF statistics: 97 PDF objects out of 1000 (max. 8388607)
- 68 compressed objects within 1 object stream
+PDF statistics: 95 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 131072)
  16 words of extra memory for PDF output out of 10000 (max. 100000000)
 

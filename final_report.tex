@@ -246,8 +246,15 @@
 	\end{itemize}
 	Once $ A $ is created it is probably easier to create a column vector of length $ (N-1)^2 $ in which every location contains $ -{\Delta y}^2 $. Once a solution is found via $ u = A\backslash b $ or CG, then $ u $ can be reshaped to the correct dimensions either manually\textemdash \texttt{\footnotesize i = floor((k-1)/(N-1)) + 2}; \texttt{\footnotesize j = mod(k-1,N-1) + 2}\textemdash or via the reshape function transposed\textemdash \texttt{\footnotesize U = reshape(u,N-1,N-1)$'$}. Using reshape without the transpose puts the solution in meshgrid format (with $ y $ as the columns and $ z $ as the rows) similar to looking at a cross-section.\\
 	
-	\section{Results: 1D Approach}
-	First, we ensured our solution was converging as expected by decreasing $ \Delta z $ by orders of 2, and checking to make sure the error was decreasing at the same rate.
+	\section{Results}
+	\subsection{One-Dimensional Problem}
+	Our model solves for the velocity $ u $ as a function of depth $ z $ for a semi-random nondimensional problem. We plot the solution vector with $ u $ on the $ x $-axis and $ z $ as the $ y $-axis below.
+	\begin{center}
+		\includegraphics[scale=0.5]{1D_low_res.png}
+	\end{center}
+	It is noted that velocity increases as a function of $ z $ until reaching a maximum such that the upper boundary condition is satisfied.
+	\newline\indent
+	We then ensured our solution was converging as expected by decreasing $ \Delta z $ by orders of 2, and checking to make sure the error was decreasing at the same rate.
 	\begin{center}
 		\renewcommand{\arraystretch}{2.0}
 		\begin{tabular}{c|c|c|c}
@@ -278,7 +285,7 @@
 	\end{center}
 
 		Here is the graph for 1D low res:\\
-		\includegraphics[scale=0.5]{1D_low_res.png}
+		
 		
 		
 	\section{Results: 2D Approach}
