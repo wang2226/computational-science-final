@@ -254,7 +254,7 @@
 	\end{center}
 	It is noted that velocity increases as a function of $ z $ until reaching a maximum such that the upper boundary condition is satisfied.
 	\newline\indent
-	We then ensured our solution was converging as expected by decreasing $ \Delta z $ by orders of 2, and checking to make sure the error was decreasing at the same rate.
+	We then ensured our solution was converging as expected by decreasing $ \Delta z $ by orders of 2, and checking to make sure the error was decreasing at a constant rate.
 	\begin{center}
 		\renewcommand{\arraystretch}{2.0}
 		\begin{tabular}{c|c|c|c}
@@ -268,7 +268,9 @@
 			\hline
 		\end{tabular}
 	\end{center}
-	We timed the one-dimensional problem using the four methods listed above and depict the results in the table below.
+	We do see the error decreasing linearly with decreases in $ \Delta z $, which leads us to believe we do not have instability in our system.
+	\newline\indent
+	We timed the one-dimensional problem using the four methods listed above and depict the results in the table below, keeping $ \Delta z $ constant at $ 5\times10^{-5} $ throughout.
 	\begin{center}
 		\renewcommand{\arraystretch}{1.5}
 		\begin{tabular}{c|c|c|c}
@@ -283,27 +285,28 @@
 			\hline
 		\end{tabular}
 	\end{center}
-
-		Here is the graph for 1D low res:\\
+	We note the direct solve on the CPU is the fastest by far. We expect this to be the case as we do not have any time dependence in our model. We do see, when using CG, that the GPU is significantly faster than the CPU, which would be helpful if this problem were altered to include time dependence.
 		
 		
 		
-	\section{Results: 2D Approach}
-	First, we ensured our solution was converging as expected by decreasing $ \Delta z $ by orders of 2, and checking to make sure the error was decreasing at the same rate. This is based on direct solve using CPU.
+	\subsection{Two-Dimensional Problem}
+	We ensured our solution was converging as expected by decreasing $ \Delta z = \Delta y $ by orders of 2, and checking to make sure the error was still within the machine precision limit. We did this by solving for $ u $ and then checking to ensure $ Au - b \approx 0 $. We show the results for four values of $ \Delta z $ in the table below.
 		\begin{center}
 		\renewcommand{\arraystretch}{2.0}
-		\begin{tabular}{c|c|c|c}
+		\begin{tabular}{c|c}
 			\hline\hline
-			$\displaystyle \Delta z $&$\displaystyle \varepsilon_{\Delta z} = \sqrt{z}\lVert u-e\rVert $&$ \displaystyle \Delta\varepsilon = \frac{\varepsilon_{2\Delta z}}{\varepsilon_{\Delta z}} $&$\displaystyle r = \log_2\left(\Delta\varepsilon\right) $\\
+			$\displaystyle \Delta z $&$\displaystyle Au-b $\\
 			\hline
-			0.1&$8.02\times 10^{-16}$&Empty Entry&Empty Entry\\
-			0.05&$1.8\times 10^{-15}$ &0.446&-1.165\\
-			0.025&$4.6\times 10^{-15}$&0.392&-1.351\\
-			0.0125&$1.02\times 10^{-14}$&0.452&-1.146\\
+			0.1&$8.02\times 10^{-16}$\\
+			0.05&$1.8\times 10^{-15}$\\
+			0.025&$4.6\times 10^{-15}$\\
+			0.0125&$1.02\times 10^{-14}$\\
 			\hline
 		\end{tabular}
 	\end{center}
-	We timed the two-dimensional problem using the four methods listed above and depict the results in the table below for \Delta z = 0.01. We did not do direct solve on GPU.
+	So, we find that for all values of $ \Delta z $ our method does solve the problem within $ N\varepsilon $ where $ N $ is the length of $ z $ and $ \varepsilon $ is machine precision ($ \sim 10^{-16} $). We do expect the error in our solution vector to incease with $ \Delta z $ since we do not have an exact solution on which to compare.
+	\newline\indent
+	As with the 1D case, we timed the two-dimensional problem using three of the four methods listed above and depict the results in the table below for \Delta z = 0.01. Because of difficulties with the CuArrays package in Julia we were not able to solve for the solution directly on the GPU, though we would expect this to be much slower than the direct solve on the CPU, as it was with the 1D case. The results of our timings are depicted in the table below.
 	\begin{center}
 		\renewcommand{\arraystretch}{1.5}
 		\begin{tabular}{c|c|c|c}
@@ -313,22 +316,25 @@
 			\multirow{2}{*}{CPU}&Direct&0.027&$1.31\times 10^{-14}$\\
 			&CG&0.025&$1.49\times 10^{-10}$\\
 			\hline
-			\multirow{2}{*}{GPU}&Direct&N/A&N/A\\
-			&CG&0.2&$1.49\times 10^{-10}$\\
+			GPU&CG&0.2&$1.49\times 10^{-10}$\\
 			\hline
 		\end{tabular}
 	\end{center}
-	
-	Here is the graph for 2D low res:\\
-	\includegraphics[scale=0.5]{2D_low_res.png}
-	
-	Here is the graph for 2D middle res:\\
-	\includegraphics[scale=0.5]{2D_mid_res.png}
-	
-	Here is the graph for 1D high res:\\
-	\includegraphics[scale=0.5]{2D_high_res.png}
-	
-	We can see it is working based on the graph changes from low res to high res.
+	We see the CPU methods are much faster than the GPU methods, but we do expect that if we had been able to run a large enough problem (we were limited by GPU memory) the CG solver on the GPU would have overtaken both methods in terms of both efficiency and time. Unfortunately, in the time remaining we don't really have a way to evidence that claim, it is just our groups expectation that eventually the GPU code would be faster.
+	\newline\indent
+	We also include a series of plots showing the solution matrix $ U $ at different resolutions. The figures appear to be approaching a common solution.
+	\begin{center}
+		Low resolution case ($ \Delta z = 0.1 $)
+		\includegraphics[scale=0.5]{2D_low_res.png}
+	\end{center}
+	\begin{center}
+		Mid resolution case ($ \Delta z = 0.025 $)
+		\includegraphics[scale=0.5]{2D_mid_res.png}
+	\end{center}
+	\begin{center}
+		High resolution case ($ \Delta z = 0.01 $)
+		\includegraphics[scale=0.5]{2D_high_res.png}
+	\end{center}
 	
 	\section{Code Listing}
 	The code we wrote is attached below
