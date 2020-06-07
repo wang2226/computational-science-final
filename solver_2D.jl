@@ -1,4 +1,3 @@
-
 using Pkg
 Pkg.add("LinearAlgebra")
 Pkg.add("SparseArrays")
@@ -21,13 +20,12 @@ using CUDAdrv
 
 using Plots
 
-Δz = 0.025
+Δz = 0.01
 z = 0:Δz:1
 y = 0:Δz:1
 N = length(z)
 
 # create sparse matrix A
-
 Imain = 1:(N-1)^2
 Jmain = 1:(N-1)^2
 

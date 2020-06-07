@@ -20,12 +20,11 @@ using CUDAdrv
 using Plots
 
 # this shows the diff between CG on CPU and GPU
-Δz = 5e-5
+# Δz = 5e-5
 
-# Δz = 1e-4
+Δz = 0.0125
 z = 0:Δz:1
 N = length(z)
-
 
 function exact(z)
     return -1/2 * z.^2 + z
@@ -97,7 +96,6 @@ u_CGGPU = [0; u_int_CGGPU_reg]
 @printf "norm between our solution and the exact solution = \x1b[31m %e \x1b[0m\n" sqrt(Δz) * norm(u_CGGPU - exact(z))
 println("-----------")
 println()
-
 
 
 # plot u against z
