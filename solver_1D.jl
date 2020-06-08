@@ -100,5 +100,6 @@ println()
 
 # plot u against z
 # u (x axis) z (y axis)
-plot(u_DSCPU,z, legend=:topleft)
+
+plot(u_DSCPU,z, legend=:none, xlabel="u", ylabel="z")
 png("1D_mid_res")

@@ -5,6 +5,17 @@
 \newcommand{\pd}[2]{\frac{\partial #1}{\partial #2}}
 \newcommand{\abs}[1]{\left|#1\right|}
 
+
+\usepackage{lineno}
+\usepackage{fontspec}
+\usepackage{polyglossia}
+\setmonofont{DejaVu Sans Mono}[Scale=MatchLowercase]
+\usepackage{minted}
+\usepackage{latexsym,exscale,stmaryrd,amsmath,amssymb}
+\usepackage{unicode-math}
+
+
+
 \begin{document}
 	\frame{
 		\centering
@@ -44,11 +55,11 @@
 		\frametitle{One-dimensional model}
 		We first solved Poisson's equation in 1D
 		\begin{equation*}
-			\pd{^2u}{z^2} = -1; \quad 0\leq z\leq 1
+		\pd{^2u}{z^2} = -1; \quad 0\leq z\leq 1
 		\end{equation*}
 		with boundary conditions
 		\begin{equation*}
-			\pd{u}{z}\left(1\right) = 0; \quad u(0) = 0
+		\pd{u}{z}\left(1\right) = 0; \quad u(0) = 0
 		\end{equation*}
 		in the four following ways (all using built-in functions):
 		\begin{itemize}
@@ -62,38 +73,38 @@
 		\frametitle{1D Discretization}
 		Use centered difference for $ z $
 		\begin{equation*}
-			\frac{u_{j-1}-2u_j+u_{j+1}}{\Delta z^2} = -1 ~~\text{for}~~ 1\leq j\leq N
+		\frac{u_{j-1}-2u_j+u_{j+1}}{\Delta z^2} = -1 ~~\text{for}~~ 1\leq j\leq N
 		\end{equation*}
 		Apply boundary conditions giving the system of equations
 		\begin{equation*}
-			\begin{dcases}
-			\frac{-2u_2 + u_3}{\Delta z^2} = -1\\
-			\frac{u_{j-1}-2u_j+u_{j+1}}{\Delta z^2} = -1;& 3\leq j\leq N-1\\
-			\frac{u_{N-1} - u_N}{\Delta z^2} = -1
-			\end{dcases}
+		\begin{dcases}
+		\frac{-2u_2 + u_3}{\Delta z^2} = -1\\
+		\frac{u_{j-1}-2u_j+u_{j+1}}{\Delta z^2} = -1;& 3\leq j\leq N-1\\
+		\frac{u_{N-1} - u_N}{\Delta z^2} = -1
+		\end{dcases}
 		\end{equation*}
 	}
 	\frame{
 		\frametitle{Matrix formulation}
 		We can represent this system of equations as a matrix ($ A $) of the form
 		\begin{equation*}
-			A = \frac{1}{\Delta z^2}\begin{bmatrix}
-			-2&1&0&\cdots&0\\
-			1&-2&1&\cdots&0\\
-			\vdots&\ddots&\ddots&\ddots&\vdots\\
-			0&\cdots&1&-2&1\\
-			0&\cdots&0&1&-1
-			\end{bmatrix}
+		A = \frac{1}{\Delta z^2}\begin{bmatrix}
+		-2&1&0&\cdots&0\\
+		1&-2&1&\cdots&0\\
+		\vdots&\ddots&\ddots&\ddots&\vdots\\
+		0&\cdots&1&-2&1\\
+		0&\cdots&0&1&-1
+		\end{bmatrix}
 		\end{equation*}
 		with the $ u $-column vector and $ b $-solution vector as
 		\begin{equation*}
-			u = \begin{bmatrix}
-			u_2\\
-			\vdots\\
-			u_N
-			\end{bmatrix} \qquad b = \begin{bmatrix}
-			-1\\\vdots\\-1
-			\end{bmatrix}
+		u = \begin{bmatrix}
+		u_2\\
+		\vdots\\
+		u_N
+		\end{bmatrix} \qquad b = \begin{bmatrix}
+		-1\\\vdots\\-1
+		\end{bmatrix}
 		\end{equation*}
 		such that $ Au = b $
 	}
@@ -101,38 +112,38 @@
 		\frametitle{Two-dimensional approach}
 		In 2D Poisson's equation is
 		\begin{equation*}
-			\pd{^2u}{y^2} + \pd{^2u}{z^2} = -1; \quad \begin{dcases}
-			0\leq y\leq 1\\
-			0\leq z\leq 1
-			\end{dcases}
+		\pd{^2u}{y^2} + \pd{^2u}{z^2} = -1; \quad \begin{dcases}
+		0\leq y\leq 1\\
+		0\leq z\leq 1
+		\end{dcases}
 		\end{equation*}
 		and we now apply boundary conditions on edges as
 		\begin{align*}
-			\pd{u}{y} = 0&\text{ at }y=1\\
-			\pd{u}{z} = 0&\text{ at }z=1\\
-			u = 0&\text{ at }y=0\vphantom{\pd{u}{y}}\\
-			u = 0&\text{ at }z=0\vphantom{\pd{u}{y}}
+		\pd{u}{y} = 0&\text{ at }y=1\\
+		\pd{u}{z} = 0&\text{ at }z=1\\
+		u = 0&\text{ at }y=0\vphantom{\pd{u}{y}}\\
+		u = 0&\text{ at }z=0\vphantom{\pd{u}{y}}
 		\end{align*}
 	}
 	\frame{
 		\frametitle{2D Discretization}
 		Using centered-difference for $ y $ and $ z $
 		\begin{equation*}
-			\frac{u_{i-1,j} - 2u_{i,j} + u_{i+1,j}}{{\Delta y}^2} + \frac{u_{i,j-1} - 2u_{i,j} + u_{i,j+1}}{{\Delta z}^2} = -1
+		\frac{u_{i-1,j} - 2u_{i,j} + u_{i+1,j}}{{\Delta y}^2} + \frac{u_{i,j-1} - 2u_{i,j} + u_{i,j+1}}{{\Delta z}^2} = -1
 		\end{equation*}
 		which simplifies when $ \Delta y = \Delta z $ to
 		\begin{equation*}
-			u_{i-1,j} + u_{i,j-1} - 4u_{i,j} + u_{i+1,j} + u_{i,j+1} = -{\Delta y}^2
+		u_{i-1,j} + u_{i,j-1} - 4u_{i,j} + u_{i+1,j} + u_{i,j+1} = -{\Delta y}^2
 		\end{equation*}
 		\begin{equation*}
-			2\leq i\leq N;\qquad 2\leq j\leq N
+		2\leq i\leq N;\qquad 2\leq j\leq N
 		\end{equation*}
 	}
 	\frame{
 		\frametitle{2D Matrix formulation}
 		Define a global index $ k $ as
 		\begin{equation*}
-			k = (i-2)(N-1) + (j-1)
+		k = (i-2)(N-1) + (j-1)
 		\end{equation*}
 		Then create
 		\begin{itemize}
@@ -163,10 +174,160 @@
 			\end{itemize}
 		\end{itemize}
 	}
-	\frame{
-		\frametitle{Code Samples}
+	\begin{frame}[fragile]
+		\frametitle{Code: Sparse Matrix A in 1D}
+		\begin{minted}[xleftmargin=10pt,linenos]{julia}
+			# create sparse matrix A
+			Il = 2:N-1
+			Jl = 1:N-2
+			Iu = 1:N-2
+			Ju = 2:N-1
+			
+			dl = ones(N-2)
+			du = ones(N-2)
+			d = -2*ones(N-1)
+			A = sparse(Il,Jl,dl,N-1,N-1) + 
+			sparse(Iu,Ju,du,N-1,N-1) + 
+			sparse(1:N-1,1:N-1,d,N-1,N-1)
+			A[N-1, N-1] = -1
+			A .= A / (Δz^2)
+		\end{minted}
+	\end{frame}
 	
-	}
+	\begin{frame}[fragile]
+		\frametitle{Code: Direct Solve on CPU}
+		\begin{minted}[xleftmargin=10pt,linenos]{julia}
+			u_dummy_DSCPU = A \ b
+			@time u_int_DSCPU = A \ b
+			u_DSCPU = [0; u_int_DSCPU]
+			@printf "norm between our solution and the exact solution = 
+			\x1b[31m %e \x1b[0m\n" sqrt(Δz) * norm(u_DSCPU - exact(z))
+		\end{minted}
+	\end{frame}
+	
+	\begin{frame}[fragile]
+		\frametitle{Code: CG Solve CPU}
+		\begin{minted}[xleftmargin=10pt,linenos]{julia}
+			u_dummy_CGCPU = cg(-A, -b)
+			@time u_int_CGCPU = cg(-A, -b)
+			u_CGCPU = [0; u_int_CGCPU]
+			@printf "norm between our solution and the exact solution = 
+			\x1b[31m %e \x1b[0m\n" sqrt(Δz) * norm(u_CGCPU - exact(z))
+		\end{minted}
+	\end{frame}
+	
+	\begin{frame}[fragile]
+		\frametitle{Code: Direct Solve GPU}
+		\begin{minted}[xleftmargin=10pt,linenos]{julia}
+			d_A = CuArray(A)
+			d_b = CuArray(b)
+			
+			u_dummy_DSGPU = d_A \ d_b
+			@time u_int_DSGPU = d_A \ d_b
+			u_int_DSGPU_reg = Array(u_int_DSGPU)
+			u_DSGPU = [0; u_int_DSGPU_reg]
+			@printf "norm between our solution and the exact solution = 
+			\x1b[31m %e \x1b[0m\n" sqrt(Δz) * norm(u_DSGPU - exact(z))
+		\end{minted}
+	\end{frame}
+	
+	\begin{frame}[fragile]
+		\frametitle{Code: CG Solve GPU}
+		\begin{minted}[xleftmargin=10pt,linenos]{julia}
+			d_A = CuArrays.CUSPARSE.CuSparseMatrixCSC(A)
+			d_b = CuArray(b)
+			u_cg = CuArray(zeros(size(d_b)))
+			u_dummy = CuArray(zeros(size(d_b)))
+			
+			cg!(u_dummy, d_A, d_b)
+			@time cg!(u_cg, d_A, d_b)
+			u_int_CGGPU_reg = Array(u_cg)
+			u_CGGPU = [0; u_int_CGGPU_reg]
+			@printf "norm between our solution and the exact solution = 
+			\x1b[31m %e \x1b[0m\n" sqrt(Δz) * norm(u_CGGPU - exact(z))
+		\end{minted}
+	\end{frame}
+	
+	\begin{frame}[fragile]
+		\frametitle{Code: Sparse Matrix A in 2D}
+		\begin{minted}[xleftmargin=5pt,linenos]{julia}
+			Imain = 1:(N-1)^2
+			Jmain = 1:(N-1)^2
+			
+			Il = 2:(N-1)^2
+			Jl = 1:((N-1)^2-1)
+			Iu = 1:((N-1)^2-1)
+			Ju = 2:(N-1)^2
+			
+			il = N:(N-1)^2
+			jl = 1:((N-1)^2-(N-1))
+			iu = 1:((N-1)^2-(N-1))
+			ju = N:(N-1)^2
+			
+			dbig = ones((N-1)^2-1)
+			dsmall = ones((N-1)^2-(N-1))
+			dmain = -4*ones((N-1)^2)
+		\end{minted}
+	\end{frame}
+	
+	\begin{frame}[fragile]
+		\frametitle{Code: Sparse Matrix A in 2D (continue)}
+		\begin{minted}[xleftmargin=5pt,linenos]{julia}
+			A = (sparse(Il,Jl,dbig,(N-1)^2,(N-1)^2)
+			+ sparse(Iu,Ju,dbig,(N-1)^2,(N-1)^2)
+			+ sparse(Imain,Jmain,dmain,(N-1)^2,(N-1)^2)
+			+ sparse(il,jl,dsmall,(N-1)^2,(N-1)^2)
+			+ sparse(iu,ju,dsmall,(N-1)^2,(N-1)^2))
+		\end{minted}
+	\end{frame}
+	
+	\begin{frame}[fragile]
+		\frametitle{Code: Sparse Matrix A in 2D (continue)}
+		\begin{minted}[xleftmargin=5pt,linenos]{julia}
+			for α=1:N-2
+			A[α*(N-1),α*(N-1)] = -3
+			end
+			
+			for β=1:N-2
+			A[(N-2)*(N-1)+β,(N-2)*(N-1)+β] = -3
+			end
+			
+			A[(N-1)^2,(N-1)^2] = -2
+			
+			for α=1:N-2
+			A[α*(N-1)+1,α*(N-1)] = 0
+			A[α*(N-1),α*(N-1)+1] = 0
+			end
+		\end{minted}
+	\end{frame}
+	
+	\begin{frame}[fragile]
+		\frametitle{Code: Direct Solve 2D}
+		\begin{minted}[xleftmargin=5pt,linenos]{julia}
+			u_dummy_DSCPU = A \ b
+			@time u_int_DSCPU = A \ b
+			u_DSCPU = reshape(u_int_DSCPU, (N-1, N-1))
+			U_DSCPU = zeros(N,N)
+			U_DSCPU[2:N,2:N] = u_DSCPU[:,:]
+			
+			@printf "norm between AU and b = 
+			\x1b[31m %e \x1b[0m\n" norm(A*u_int_DSCPU - b)
+		\end{minted}
+	\end{frame}
+	
+	\begin{frame}[fragile]
+		\frametitle{Code: CG Solve 2D}
+		\begin{minted}[xleftmargin=5pt,linenos]{julia}
+			u_dummy_CGCPU = cg(-A, -b)
+			@time u_int_CGCPU = cg(-A, -b)
+			u_CGCPU = reshape(u_int_CGCPU, (N-1, N-1))
+			U_CGCPU = zeros(N,N)
+			U_CGCPU[2:N,2:N] = u_CGCPU[:,:]
+			@printf "norm between AU and b = 
+			\x1b[31m %e \x1b[0m\n" norm(A*u_int_CGCPU - b)
+		\end{minted}
+	\end{frame}
+	
 	\frame{
 		\frametitle{1D Solution Vector}
 		Our model solves for velocity $ u(z) $\\
