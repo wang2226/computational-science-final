@@ -17,7 +17,7 @@ using Printf
 #CuArrays.allowscalar(false)
 #using CUDAnative
 #using CUDAdrv
-#using Plots
+using Plots
 
 # this shows the diff between CG on CPU and GPU
 # Δz = 5e-5
@@ -27,7 +27,7 @@ z = 0:Δz:1
 N = length(z)
 
 function exact(z)
-    return -1/2 * z.^2 .+ z 
+    return -1/2 * z.^2 .+ z
 end
 
 # create sparse matrix A
@@ -96,10 +96,9 @@ u_CGGPU = [0; u_int_CGGPU_reg]
 @printf "norm between our solution and the exact solution = \x1b[31m %e \x1b[0m\n" sqrt(Δz) * norm(u_CGGPU - exact(z))
 println("-----------")
 println()
-
+=#
 
 # plot u against z
 # u (x axis) z (y axis)
-# plot(u_DSCPU,z)
-# png("1D_mid_res")
-=#
+plot(u_DSCPU,z, legend=:topleft)
+png("1D_mid_res")
