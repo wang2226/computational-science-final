@@ -1,0 +1,628 @@
+% !TeX program = lualatex
+
+\documentclass[11pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage{beramono}
+\usepackage{listings}
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage[mathletters]{ucs}
+\usepackage[utf8x]{inputenc}
+\usepackage{multirow}
+\usepackage{multicol}
+\usepackage{mathtools}
+\usepackage{geometry}
+\usepackage{siunitx}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{patterns}
+\geometry{margin=1.5in,top=1in,bottom=1in}
+
+\newcommand{\pd}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\abs}[1]{\left|#1\right|}
+
+\usepackage{lineno}
+\usepackage{fontspec}
+\usepackage{polyglossia}
+\setmonofont{DejaVu Sans Mono}[Scale=MatchLowercase]
+\usepackage{minted}
+\usepackage{latexsym,exscale,stmaryrd,amsmath,amssymb}
+\usepackage{unicode-math}
+
+\lstdefinelanguage{Julia}%
+  {morekeywords={abstract,break,case,catch,const,continue,do,else,elseif,%
+      end,export,false,for,function,immutable,import,importall,if,in,%
+      macro,module,otherwise,quote,return,switch,true,try,type,typealias,%
+      using,while},%
+   sensitive=true,%
+   alsoother={$},%
+   morecomment=[l]\#,%
+   morecomment=[n]{\#=}{=\#},%
+   morestring=[s]{"}{"},%
+   morestring=[m]{'}{'},%
+}[keywords,comments,strings]%
+
+\lstset{%
+    language         = Julia,
+    basicstyle       = \ttfamily,
+    keywordstyle     = \bfseries\color{blue},
+    stringstyle      = \color{magenta},
+    commentstyle     = \color{ForestGreen},
+    showstringspaces = false,
+}
+
+\title{\textbf{Final Report}}
+\author{Pierce Hunter, Nick Kuckuck, Haoran Wang}
+\date{7 June 2020}
+
+\begin{document}
+\maketitle
+\section*{Contribution}
+Pierce: theory, abstract, general debugging and editing\\
+Haoran: coding, general debugging and editing\\
+Nick: testing, final report, general debugging and editing\\
+
+\section{1D Approach}
+	We solved the 1D equation
+	\begin{equation}
+		\pd{^2u}{z^2} = -1; \quad 0\leq z\leq 1
+	\end{equation}
+	with boundary conditions
+	\begin{equation}
+		\pd{u}{z}\left(1\right) = 0; \quad u(0) = 0
+	\end{equation}
+	in the four following ways:
+	\begin{itemize}
+		\item Direct solve on the CPU
+		\item CG on the CPU
+		\item Direct solve on the GPU
+		\item CG on the GPU.
+	\end{itemize}
+	For the one-dimensional problem we can utilize the straight-forward centered-difference discretization from class, namely
+	\begin{equation}
+		\frac{u_{j-1}-2u_j+u_{j+1}}{\Delta z^2} = -1 ~~\text{for}~~ 1\leq j\leq N.
+	\end{equation}
+	We discretize on the boundaries as well, giving the final system of equations
+	\begin{equation}
+		\begin{dcases}
+		\frac{-2u_2 + u_3}{\Delta z^2} = -1\\
+		\frac{u_{j-1}-2u_j+u_{j+1}}{\Delta z^2} = -1;& 3\leq j\leq N-1\\
+		\frac{u_{N-1} - u_N}{\Delta z^2} = -1.
+		\end{dcases}
+	\end{equation}
+	We can represent this system of equations as a matrix ($ A $) of the form
+	\begin{equation}
+		A = \frac{1}{\Delta z^2}\begin{bmatrix}
+		-2&1&0&\cdots&0\\
+		1&-2&1&\cdots&0\\
+		\vdots&\ddots&\ddots&\ddots&\vdots\\
+		0&\cdots&1&-2&1\\
+		0&\cdots&0&1&-1
+		\end{bmatrix}
+	\end{equation}
+	with the $ u $-column vector and $ b $-solution vector as
+	\begin{equation}
+		u = \begin{bmatrix}
+		u_2\\
+		\vdots\\
+		u_N
+		\end{bmatrix} \qquad b = \begin{bmatrix}
+		-1\\\vdots\\-1
+		\end{bmatrix}
+	\end{equation}
+	such that $ Au = b $.
+	\section{2D Approach}
+	We then expanded the problem to two-dimensions utilizing the same techniques. In 2D eq. (1) becomes
+	\begin{equation}
+		\pd{^2u}{y^2} + \pd{^2u}{z^2} = -1; \quad \begin{dcases}
+		0\leq y\leq 1\\
+		0\leq z\leq 1
+		\end{dcases}
+	\end{equation}
+	and we expand the boundary conditions in (2) as
+	\begin{align}
+		\pd{u}{y} = 0&\text{ at }y=1\\
+		\pd{u}{z} = 0&\text{ at }z=1\\
+		u = 0&\text{ at }y=0\vphantom{\pd{u}{y}}\\
+		u = 0&\text{ at }z=0\vphantom{\pd{u}{y}}.
+	\end{align}
+	\subsection{Discretization}
+	We transform (7) into a system of ODE's by discretizing in space\textemdash both $ y $ and $ z $\textemdash using centered difference, such that
+	\begin{equation}
+		\frac{u_{i-1,j} - 2u_{i,j} + u_{i+1,j}}{{\Delta y}^2} + \frac{u_{i,j-1} - 2u_{i,j} + u_{i,j+1}}{{\Delta z}^2} = -1.
+	\end{equation}
+	which simplifies when $ \Delta y = \Delta z $ to
+	\begin{equation}
+		u_{i-1,j} + u_{i,j-1} - 4u_{i,j} + u_{i+1,j} + u_{i,j+1} = -{\Delta y}^2.
+	\end{equation}
+	This discretization works when $ 2\leq i\leq N $ and $ 2\leq j\leq N $, but we need to solve on the boundaries, of which there are many. The boundary conditions discretize separately for the edges and corners, which expands our boundary conditions to eight separate cases
+	\begin{itemize}
+		\item when $ i = 2 $
+		\begin{itemize}
+			\item and $ j = 2 $
+			\begin{align*}
+				u_{1,2} + u_{2,1} - 4u_{2,2} + u_{3,2} + u_{2,3} &= -{\Delta y}^2\\
+				- 4u_{2,2} + u_{3,2} + u_{2,3} &= -{\Delta y}^2
+			\end{align*}
+			\item and $ j = N $
+			\begin{align*}
+				u_{1,N} + u_{2,N-1} - 4u_{2,N} + u_{3,N} + u_{2,N+1} &= -{\Delta y}^2\\
+				u_{2,N-1} - 3u_{2,N} + u_{3,N} &= -{\Delta y}^2
+			\end{align*}
+			\item otherwise
+			\begin{align*}
+				u_{1,j} + u_{2,j-1} - 4u_{2,j} + u_{3,j} + u_{2,j+1} &= -{\Delta y}^2\\
+				u_{2,j-1} - 4u_{2,j} + u_{3,j} + u_{2,j+1} &= -{\Delta y}^2,
+			\end{align*}
+		\end{itemize}
+		\item when $ i = N $
+		\begin{itemize}
+			\item and $ j = 2 $
+			\begin{align*}
+				u_{N-1,2} + u_{2,1} - 4u_{N,2} + u_{N+1,2} + u_{N,3} &= -{\Delta y}^2\\
+				u_{N-1,2} - 3u_{N,2} + u_{N,3} &= -{\Delta y}^2
+			\end{align*}
+			\item and $ j = N $
+			\begin{align*}
+				u_{N-1,N} + u_{N,N-1} - 4u_{N,N} + u_{N+1,N} + u_{N,N+1} &= -{\Delta y}^2\\
+				u_{N-1,N} + u_{N,N-1} - 2u_{N,N} &= -{\Delta y}^2
+			\end{align*}
+			\item otherwise
+			\begin{align*}
+				u_{N-1,j} + u_{N,j-1} - 4u_{N,j} + u_{N+1,j} + u_{N,j+1} &= -{\Delta y}^2\\
+				u_{N-1,j} + u_{N,j-1} - 3u_{N,j} + u_{N,j+1} &= -{\Delta y}^2,
+			\end{align*}
+		\end{itemize}
+		\item or, when $ j = 2 $ and $ 3\leq i\leq N-1 $
+		\begin{align*}
+			u_{i-1,2} + u_{i,1} - 4u_{i,2} + u_{i+1,2} + u_{i,3} &= -{\Delta y}^2\\
+			u_{i-1,2} - 4u_{i,2} + u_{i+1,2} + u_{i,3} &= -{\Delta y}^2,
+		\end{align*}
+		\item and, lastly when $ j = N $ and $ 3\leq i\leq N-1 $
+		\begin{align*}
+			u_{i-1,N} + u_{i,N-1} - 4u_{i,N} + u_{i+1,N} + u_{i,N+1} &= -{\Delta y}^2\\
+			u_{i-1,N} + u_{i,N-1} - 3u_{i,N} + u_{i+1,N} &= -{\Delta y}^2
+		\end{align*}
+	\end{itemize}
+	\section{Convert to a Matrix}
+	In order to convert this discretization to a matrix that can be used for a direct solve we need to define a new indexing convention. For this we calculate a global index $ k $ as
+	\begin{equation}
+		k = (i-2)(N-1) + (j-1).
+	\end{equation}
+	We can then translate our discretization into this new system, giving nine total cases. Starting with the corner (2,2) we have
+	\begin{itemize}
+		\item $ (2,2) $
+		\begin{align*}
+			- 4u_1 + u_{N} + u_2 &= -{\Delta y}^2
+		\end{align*}
+		\item $ (2,j) $ with $ 3\leq j\leq N-1 $
+		\begin{align*}
+			u_{j-2} - 4u_{j-1} + u_{N-2+j} + u_j &= -{\Delta y}^2
+		\end{align*}
+		\item $ (2,N) $
+		\begin{align*}
+			u_{N-2} - 3u_{N-1} + u_{2N-2} &= -{\Delta y}^2
+		\end{align*}
+		\item $ (i,2) $ with $ 3\leq i\leq N-1 $
+		\begin{align*}
+			\begin{split}
+				u_{(i-3)(N-1)+1} - 4u_{(i-2)(N-1)+1} \\+ u_{(i-1)(N-1)+1} + u_{(i-2)(N-1)+2} &= -{\Delta y}^2
+			\end{split}
+		\end{align*}
+		\item $ (i,j) $ with $ 3\leq i\leq N-1 $ and $ 3\leq j\leq N-1 $
+		\begin{align*}
+			\begin{split}
+				u_{(i-3)(N-1)+j-1} + u_{(i-2)(N-1)+j-2} - 4u_{(i-2)(N-1)+j-1}\\ + u_{(i-1)(N-1)+j-1} + u_{(i-2)(N-1)+j}& = -{\Delta y}^2
+			\end{split}
+		\end{align*}
+		\item $ (i,N) $ with $ 3\leq i\leq N-1 $
+		\begin{align*}
+			\begin{split}
+				u_{(i-3)(N-1)+N-1} + u_{(i-2)(N-1)+N-2} - 3u_{(i-2)(N-1)+N-1} \\+ u_{(i-1)(N-1)+N-1} &= -{\Delta y}^2
+			\end{split}
+		\end{align*}
+		\item $ (N,2) $
+		\begin{align*}
+			u_{(N-3)(N-1)+1} - 3u_{(N-2)(N-1)+1} + u_{(N-2)(N-1)+2} &= -{\Delta y}^2
+		\end{align*}
+		\item $ (N,j) $ with $ 3\leq j\leq N-1 $
+		\begin{align*}
+			\begin{split}
+				u_{(N-3)(N-1)+j-1} + u_{(N-2)(N-1)+j-2} - 3u_{(N-2)(N-1)+j-1}\\ + u_{(N-2)(N-1)+j} &= -{\Delta y}^2
+			\end{split}
+		\end{align*}
+		\item $ (N,N) $
+		\begin{align*}
+			u_{(N-2)(N-1)} + u_{(N-2)N} - 2u_{(N-1)^2} &= -{\Delta y}^2
+		\end{align*}
+	\end{itemize}
+	So what we end up with is an $ (N-1)^2\times(N-1)^2 $ matrix $ A $ and a solution vector $ b $ with $ (N-1)^2 $ entries. Moving across a row we start at $ (2,2) $, to increase $ j $ by one we move to the right 1 entry, to increase $ i $ by 1 we move the right $ (N-1) $ entries, such that we hit every value of $ j $ first, then move to the next $ i $.
+	\newline\indent Along the diagonals of the matrix $ A $ we have $ -4 $ except in the following locations:
+	\begin{itemize}
+		\item rows $ \alpha(N-1) $ the diagonal entry is $ -3 $ for $ 1\leq \alpha\leq N-2 $
+		\item rows $ \left(N-2\right)\left(N-1\right)+\beta $ the diagonal is $ -3 $ for $ 1\leq\beta\leq N-2 $
+		\item row $ \left(N-1\right)^2 $ the diagonal is $ -2 $
+	\end{itemize}
+	We also have four other sub-diagonals that will all contain ones except where noted. These represent the following location:
+	\begin{itemize}
+		\item $ j-1 $ which is directly below the diagonal\\
+		In Julia these are the locations: \texttt{\footnotesize[2:(N-1)$^2$, 1:(N-1)$^2$-1]}\\
+		Exception: the locations $ (\alpha(N-1) + 1,\alpha(N-1)) $ should be zero for $ 1\leq\alpha\leq N-2 $
+		\item $ j+1 $ which is directly above the diagonal\\
+		In Julia these are the locations: \texttt{\footnotesize[1:(N-1)$^2$-1, 2:(N-1)$^2$]}\\
+		Exception: the locations $ (\alpha(N-1),\alpha(N-1)+1) $ should be zero for $ 1\leq\alpha\leq N-2 $
+		\item $ i-1 $ which are exactly $ N-1 $ below the diagonal\\
+		In Julia these are the locations: \texttt{\footnotesize[N:(N-1)$^2$, 1:(N-1)$^2$-(N-1)]}
+		\item $ i+1 $ which are exactly $ N+1 $ above the diagonal\\
+		In Julia these are the locations: \texttt{\footnotesize[1:(N-1)$^2$-(N-1), N:(N-1)$^2$]}
+	\end{itemize}
+	Once $ A $ is created it is probably easier to create a column vector of length $ (N-1)^2 $ in which every location contains $ -{\Delta y}^2 $. Once a solution is found via $ u = A\backslash b $ or CG, then $ u $ can be reshaped to the correct dimensions either manually\textemdash \texttt{\footnotesize i = floor((k-1)/(N-1)) + 2}; \texttt{\footnotesize j = mod(k-1,N-1) + 2}\textemdash or via the reshape function transposed\textemdash \texttt{\footnotesize U = reshape(u,N-1,N-1)$'$}. Using reshape without the transpose puts the solution in meshgrid format (with $ y $ as the columns and $ z $ as the rows) similar to looking at a cross-section.\\
+
+	\section{Results}
+	\subsection{One-Dimensional Problem}
+	Our model solves for the velocity $ u $ as a function of depth $ z $ for a semi-random nondimensional problem. We plot the solution vector with $ u $ on the $ x $-axis and $ z $ as the $ y $-axis below.
+	\begin{center}
+		\includegraphics[scale=0.5]{1D_mid_res.png}
+	\end{center}
+	It is noted that velocity increases as a function of $ z $ until reaching a maximum such that the upper boundary condition is satisfied.
+	\newline\indent
+	We then ensured our solution was converging as expected by decreasing $ \Delta z $ by orders of 2, and checking to make sure the error was decreasing at a constant rate.
+	\begin{center}
+		\renewcommand{\arraystretch}{2.0}
+		\begin{tabular}{c|c|c|c}
+			\hline\hline
+			$\displaystyle \Delta z $&$\displaystyle \varepsilon_{\Delta z} = \sqrt{z}\lVert u-e\rVert $&$ \displaystyle \Delta\varepsilon = \frac{\varepsilon_{2\Delta z}}{\varepsilon_{\Delta z}} $&$\displaystyle r = \log_2\left(\Delta\varepsilon\right) $\\
+			\hline
+			0.1&$3.102\times 10^{-2}$&Empty Entry&Empty Entry\\
+			0.05&$1.497\times 10^{-2}$&2.072&1.051\\
+			0.025&$7.352\times 10^{-3}$&2.036&1.026\\
+			0.0125&$3.642\times 10^{-3}$&2.019&1.014\\
+			\hline
+		\end{tabular}
+	\end{center}
+	We do see the error decreasing linearly with decreases in $ \Delta z $, which leads us to believe we do not have instability in our system.
+	\newline\indent
+	We timed the one-dimensional problem using the four methods listed above and depict the results in the table below, keeping $ \Delta z $ constant at $ 5\times10^{-5} $ throughout.
+	\begin{center}
+		\renewcommand{\arraystretch}{1.5}
+		\begin{tabular}{c|c|c|c}
+			\hline\hline
+			\textbf{Device}&\textbf{Method}&\textbf{Time [s]}&\textbf{Error~~$\sqrt{z}\lVert u-e\rVert $}\\
+			\hline
+			\multirow{2}{*}{CPU}&Direct&0.0426&$1.44\times 10^{-5}$\\
+			&CG&15.1&$1.44\times 10^{-5}$\\
+			\hline
+			\multirow{2}{*}{GPU}&Direct&1.13&$1.44\times 10^{-5}$\\
+			&CG&3.19&$1.44\times 10^{-5}$\\
+			\hline
+		\end{tabular}
+	\end{center}
+	We note the direct solve on the CPU is the fastest by far. We expect this to be the case as we do not have any time dependence in our model. We do see, when using CG, that the GPU is significantly faster than the CPU, which would be helpful if this problem were altered to include time dependence.
+
+
+
+	\subsection{Two-Dimensional Problem}
+	We ensured our solution was converging as expected by decreasing $ \Delta z = \Delta y $ by orders of 2, and checking to make sure the error was still within the machine precision limit. We did this by solving for $ u $ and then checking to ensure $ Au - b \approx 0 $. We show the results for four values of $ \Delta z $ in the table below.
+		\begin{center}
+		\renewcommand{\arraystretch}{2.0}
+		\begin{tabular}{c|c}
+			\hline\hline
+			$\displaystyle \Delta z $&$\displaystyle Au-b $\\
+			\hline
+			0.1&$8.02\times 10^{-16}$\\
+			0.05&$1.8\times 10^{-15}$\\
+			0.025&$4.6\times 10^{-15}$\\
+			0.0125&$1.02\times 10^{-14}$\\
+			\hline
+		\end{tabular}
+	\end{center}
+	So, we find that for all values of $ \Delta z $ our method does solve the problem within $ N\varepsilon $ where $ N $ is the length of $ z $ and $ \varepsilon $ is machine precision ($ \sim 10^{-16} $). We do expect the error in our solution vector to incease with $ \Delta z $ since we do not have an exact solution on which to compare.
+	\newline\indent
+	As with the 1D case, we timed the two-dimensional problem using three of the four methods listed above and depict the results in the table below for \Delta z = 0.01. Because of difficulties with the CuArrays package in Julia we were not able to solve for the solution directly on the GPU, though we would expect this to be much slower than the direct solve on the CPU, as it was with the 1D case. The results of our timings are depicted in the table below.
+	\begin{center}
+		\renewcommand{\arraystretch}{1.5}
+		\begin{tabular}{c|c|c|c}
+			\hline\hline
+			\textbf{Device}&\textbf{Method}&\textbf{Time [s]}&\textbf{Error~~$Au-b $}\\
+			\hline
+			\multirow{2}{*}{CPU}&Direct&0.027&$1.31\times 10^{-14}$\\
+			&CG&0.025&$1.49\times 10^{-10}$\\
+			\hline
+			GPU&CG&0.2&$1.49\times 10^{-10}$\\
+			\hline
+		\end{tabular}
+	\end{center}
+	We see the CPU methods are much faster than the GPU methods, but we do expect that if we had been able to run a large enough problem (we were limited by GPU memory) the CG solver on the GPU would have overtaken both methods in terms of both efficiency and time. Unfortunately, in the time remaining we don't really have a way to evidence that claim, it is just our groups expectation that eventually the GPU code would be faster.
+	\newline\indent
+	We also include a series of plots showing the solution matrix $ U $ at different resolutions. The figures appear to be approaching a common solution.
+
+	\newpage
+	\begin{center}
+		Low resolution case ($ \Delta z = 0.1 $)
+		\begin{figure}[hbt!]
+		\centering
+		    \includegraphics[scale=0.4]{2D_low_res.png}
+		\end{figure}
+	\end{center}
+	\begin{center}
+		Mid resolution case ($ \Delta z = 0.025 $)
+		\begin{figure}[hbt!]
+		\centering
+		    \includegraphics[scale=0.4]{2D_mid_res.png}
+		\end{figure}
+	\end{center}
+	\begin{center}
+		High resolution case ($ \Delta z = 0.01 $)
+		\begin{figure}[hbt!]
+		\centering
+		    \includegraphics[scale=0.4]{2D_high_res.png}
+		 \end{figure}
+	\end{center}
+
+	\newpage
+	\section{Code Listing}
+	\textbf{Here is the code for our 1D solver:}
+	\begin{minted}[xleftmargin=20pt,linenos]{julia}
+    using Pkg
+    Pkg.add("LinearAlgebra")
+    Pkg.add("SparseArrays")
+    Pkg.add("IterativeSolvers")
+    Pkg.add("Printf")
+    Pkg.add("CuArrays")
+    Pkg.add("CUDAnative")
+    Pkg.add("CUDAdrv")
+    Pkg.add("Plots")
+
+    using LinearAlgebra
+    using SparseArrays
+    using IterativeSolvers
+    using Printf
+
+    using CuArrays
+    CuArrays.allowscalar(false)
+    using CUDAnative
+    using CUDAdrv
+    using Plots
+
+    # this shows the diff between CG on CPU and GPU
+    # Δz = 5e-5
+
+    Δz = 0.0125
+    z = 0:Δz:1
+    N = length(z)
+
+    function exact(z)
+        return -1/2 * z.^2 + z
+    end
+
+    # create sparse matrix A
+    Il = 2:N-1
+    Jl = 1:N-2
+    Iu = 1:N-2
+    Ju = 2:N-1
+
+    dl = ones(N-2)
+    du = ones(N-2)
+    d = -2*ones(N-1)
+    A = sparse(Il,Jl,dl,N-1,N-1) + sparse(Iu,Ju,du,N-1,N-1) + sparse(1:N-1,1:N-1,d,N-1,N-1)
+    A[N-1, N-1] = -1
+    A .= A / (Δz^2)
+
+    b = -ones(N-1, 1)
+
+
+    #   Perform LU solve
+    println("Direct solve on CPU")
+    u_dummy_DSCPU = A \ b
+    @time u_int_DSCPU = A \ b
+    u_DSCPU = [0; u_int_DSCPU]
+    # @show umod
+    @printf "norm between our solution and the exact solution = \x1b[31m %e \x1b[0m\n" sqrt(Δz) * norm(u_DSCPU - exact(z))
+    println("-----------")
+    println()
+
+    #    Perform CG solve
+    println("Native Julia CG solve on CPU")
+    u_dummy_CGCPU = cg(-A, -b)
+    @time u_int_CGCPU = cg(-A, -b)
+    u_CGCPU = [0; u_int_CGCPU]
+    @printf "norm between our solution and the exact solution = \x1b[31m %e \x1b[0m\n" sqrt(Δz) * norm(u_CGCPU - exact(z))
+
+    println("-----------")
+    println()
+
+
+    # d_A = CuArrays.CUSPARSE.CuSparseMatrixCSC(A)
+    d_A = CuArray(A)
+    d_b = CuArray(b)
+
+    println("Direct solve on GPU")
+    u_dummy_DSGPU = d_A \ d_b
+    @time u_int_DSGPU = d_A \ d_b
+    u_int_DSGPU_reg = Array(u_int_DSGPU)
+    u_DSGPU = [0; u_int_DSGPU_reg]
+    @printf "norm between our solution and the exact solution = \x1b[31m %e \x1b[0m\n" sqrt(Δz) * norm(u_DSGPU - exact(z))
+    println("-----------")
+    println()
+
+    # CG solve on GPU
+    d_A = CuArrays.CUSPARSE.CuSparseMatrixCSC(A)
+    d_b = CuArray(b)
+    u_cg = CuArray(zeros(size(d_b)))
+    u_dummy = CuArray(zeros(size(d_b)))
+
+    println("CG solve on GPU")
+    # u_dummy_CGCPU = cg(-d_A, -d_b)
+    cg!(u_dummy, d_A, d_b)
+    # @time u_int_CGGPU = cg(-d_A, -d_b)
+    @time cg!(u_cg, d_A, d_b)
+    u_int_CGGPU_reg = Array(u_cg)
+    u_CGGPU = [0; u_int_CGGPU_reg]
+    @printf "norm between our solution and the exact solution = \x1b[31m %e \x1b[0m\n" sqrt(Δz) * norm(u_CGGPU - exact(z))
+    println("-----------")
+    println()
+
+
+    # plot u against z
+    # u (x axis) z (y axis)
+    # plot(u_DSCPU,z)
+    # png("1D_mid_res")
+
+	\end{minted}
+
+	\newpage
+	\textbf{Here is the code for our 2D solver:}
+	\begin{minted}[xleftmargin=20pt,linenos]{julia}
+
+    using Pkg
+    Pkg.add("LinearAlgebra")
+    Pkg.add("SparseArrays")
+    Pkg.add("IterativeSolvers")
+    Pkg.add("Printf")
+    Pkg.add("CuArrays")
+    Pkg.add("CUDAnative")
+    Pkg.add("CUDAdrv")
+    Pkg.add("Plots")
+
+    using LinearAlgebra
+    using SparseArrays
+    using IterativeSolvers
+    using Printf
+
+    using CuArrays
+    CuArrays.allowscalar(false)
+    using CUDAnative
+    using CUDAdrv
+
+    using Plots
+
+    Δz = 0.01
+    z = 0:Δz:1
+    y = 0:Δz:1
+    N = length(z)
+
+    # create sparse matrix A
+    Imain = 1:(N-1)^2
+    Jmain = 1:(N-1)^2
+
+    Il = 2:(N-1)^2
+    Jl = 1:((N-1)^2-1)
+    Iu = 1:((N-1)^2-1)
+    Ju = 2:(N-1)^2
+
+    il = N:(N-1)^2
+    jl = 1:((N-1)^2-(N-1))
+    iu = 1:((N-1)^2-(N-1))
+    ju = N:(N-1)^2
+
+    dbig = ones((N-1)^2-1)
+    dsmall = ones((N-1)^2-(N-1))
+    dmain = -4*ones((N-1)^2)
+    A = (sparse(Il,Jl,dbig,(N-1)^2,(N-1)^2)
+        + sparse(Iu,Ju,dbig,(N-1)^2,(N-1)^2)
+        + sparse(Imain,Jmain,dmain,(N-1)^2,(N-1)^2)
+        + sparse(il,jl,dsmall,(N-1)^2,(N-1)^2)
+        + sparse(iu,ju,dsmall,(N-1)^2,(N-1)^2))
+
+    # rows α(N-1) the diagonal entry is -3
+    for α=1:N-2
+        A[α*(N-1),α*(N-1)] = -3
+    end
+
+    # rows (N-2)(N-1)+β the diagonal is -3
+    for β=1:N-2
+        A[(N-2)*(N-1)+β,(N-2)*(N-1)+β] = -3
+    end
+
+    # rows (N-1)^2 the diagonal is -2
+    A[(N-1)^2,(N-1)^2] = -2
+
+    # locations (α*(n-1)+1, α*(n-1)) should be zero
+    # locations (α*(n-1), α*(n-1)+1) should be zero
+    for α=1:N-2
+        A[α*(N-1)+1,α*(N-1)] = 0
+        A[α*(N-1),α*(N-1)+1] = 0
+    end
+
+    # print(Matrix(A))
+    # print(size(A))
+
+    b = -Δz^2 * ones((N-1)^2, 1)
+    # print(b)
+    # print(size(b))
+
+    #   Perform LU solve
+    println("Direct solve on CPU")
+    u_dummy_DSCPU = A \ b
+    @time u_int_DSCPU = A \ b
+    u_DSCPU = reshape(u_int_DSCPU, (N-1, N-1))
+    U_DSCPU = zeros(N,N)
+    U_DSCPU[2:N,2:N] = u_DSCPU[:,:]
+    #u_DSCPU = transpose(u_DSCPU)
+    # print(size(u_DSCPU))
+    # @show umod
+    @printf "norm between AU and b = \x1b[31m %e \x1b[0m\n" norm(A*u_int_DSCPU - b)
+    println("-----------")
+    println()
+
+
+    #    Perform CG solve
+    println("Native Julia CG solve on CPU")
+    u_dummy_CGCPU = cg(-A, -b)
+    @time u_int_CGCPU = cg(-A, -b)
+    u_CGCPU = reshape(u_int_CGCPU, (N-1, N-1))
+    U_CGCPU = zeros(N,N)
+    U_CGCPU[2:N,2:N] = u_CGCPU[:,:]
+    #u_CGCPU = transpose(u_CGCPU)
+    @printf "norm between AU and b = \x1b[31m %e \x1b[0m\n" norm(A*u_int_CGCPU - b)
+
+    println("-----------")
+    println()
+
+    #=
+    # d_A = CuArrays.CUSPARSE.CuSparseMatrixCSC(A)
+    d_A = CuArray(A)
+    d_b = CuArray(b)
+
+    println("Direct solve on GPU")
+    u_dummy_DSGPU = d_A \ d_b
+    @time u_int_DSGPU = d_A \ d_b
+    u_DSGPU = Matrix(reshape(u_int_DSGPU, (N-1, N-1)))
+    U_DSGPU = zeros(N,N)
+    U_DSGPU[2:N,2:N] = u_DSGPU[:,:]
+    @printf "norm between AU and b = \x1b[31m %e \x1b[0m\n" norm(d_A*u_int_DSGPU - d_b)
+    println("-----------")
+    println()
+    =#
+
+
+
+    # CG solve on GPU
+    d_A = CuArrays.CUSPARSE.CuSparseMatrixCSC(A)
+    d_b = CuArray(b)
+    u_cg = CuArray(zeros(size(d_b)))
+    u_dummy = CuArray(zeros(size(d_b)))
+
+    println("CG solve on GPU")
+    # u_dummy_CGCPU = cg(-d_A, -d_b)
+    cg!(u_dummy, d_A, d_b)
+    # @time u_int_CGGPU = cg(-d_A, -d_b)
+    @time cg!(u_cg, d_A, d_b)
+    u_CGGPU = Matrix(reshape(u_cg, (N-1, N-1)))
+    U_CGGPU = zeros(N,N)
+    U_CGGPU[2:N,2:N] = u_CGGPU[:,:]
+    @printf "norm between AU and b = \x1b[31m %e \x1b[0m\n" norm(d_A*u_cg - d_b)
+    println("-----------")
+    println()
+
+
+    # u for direct solve on CPU (surface)
+
+    # plot(y,z,U_DSCPU,st=:surface,camera=(0,90))
+    # png("2D_mid_res")
+
+
+	\end{minted}
+
+\end{document}
